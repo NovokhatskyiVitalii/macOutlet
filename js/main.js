@@ -1,3 +1,24 @@
+let acc = document.getElementsByClassName("accordion");
+
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    let panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+
+let openFilter = document.getElementById("open-filter");
+let filters = document.getElementById("filters");
+
+openFilter.addEventListener('click', function () {
+  filters.classList.toggle("closed");
+})
+
 function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let imgUrl = "";
@@ -69,3 +90,4 @@ function renderItems(itemsToRender) {
 }
 
 renderItems(items);
+
