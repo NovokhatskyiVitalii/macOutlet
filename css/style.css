@@ -132,7 +132,7 @@ img {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 300px;
   min-height: 480px;
   border: 1px solid #E0E0E0;
@@ -239,10 +239,6 @@ img {
   max-width: min-content;
 }
 
-.accordion-filters.closed{
-  display: none;
-}
-
 .accordion {
   background: #EDF3FF;
   cursor: pointer;
@@ -324,6 +320,7 @@ img {
   display: flex;
   flex-wrap: wrap;
 }
+
 .colors .checkbox-block,
 .memory .checkbox-block {
   width: 50%;
@@ -377,9 +374,125 @@ img {
   background-color: #DAE2EA;
 }
 
+.modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  top: 0;
+  left: 0;
+}
+
+.modal.closed {
+  display: none;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: white;
+  transform: translate(-50%, -50%);
+  width: 1020px;
+  height: 491px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.modal-img {
+  padding: 0 30px;
+}
+
+.modal-img img {
+  height: 250px;
+  width: 250px;
+  max-width: none;
+}
+
+.modal-info {
+  height: 100%;
+  align-self: flex-start;
+  padding: 35px 65px 0px 75px;
+  border-left: 1px solid #E2E2E2;
+  border-right: 1px solid #E2E2E2;
+}
+
+.modal-info h4 {
+  font-size: 24px;
+  color: #3B3E66;
+  font-weight: bold;
+}
+
+.modal-stats {
+  position: relative;
+  background: #DAE2EA;
+  border-radius: 10px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 19px 0 29px 0;
+  margin-top: 29px;
+}
+
+.modal-stats-card {
+  width: 300px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.about-descr {
+  display: flex;
+  flex-direction: column;
+  margin-top: 29px;
+}
+
+.about {
+  padding-bottom: 15px;
+  font-size: 14px;
+  color: #767272;
+}
+
+.about-text {
+  color: black;
+  padding-left: 5;
+}
 
 
+.modal-price {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #3B3E66;
+}
 
+.price {
+  padding-bottom: 23px;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.modal-str-text {
+  font-size: 14px;
+  color: #3B3E66;
+}
+
+.txt-price {
+  font-weight: bold;
+  color: #3B3E66;
+}
+
+.btn-modal {
+  margin-top: 31px;
+  padding: 13px 26px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
+  background-color: #0E49B5;
+}
 
 
 @media screen and (max-width: 1020px) {
