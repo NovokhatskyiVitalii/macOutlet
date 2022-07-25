@@ -1,16 +1,9 @@
 let acc = document.getElementsByClassName("accordion");
-
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    let panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
-}
+let modalElement = document.getElementById('modal');
+let searchInput = document.getElementById('search-input');
+let filters = {
+  searchText: ''
+};
 
 function getReviewsAsText(reviews) {
   if (reviews >= 50) {
@@ -128,8 +121,6 @@ function renderModal(item) {
   `;
 }
 
-let modalElement = document.getElementById('modal');
-
 function openModal(id) {
   let item = items.find((element) => {
     if (id == element.id) {
@@ -143,10 +134,42 @@ function openModal(id) {
   modalElement.classList.remove('closed');
 }
 
+function filtersUpdated() {
+  let filteredItems = JSON.parse(JSON.stringify(items));
+
+  if (filters.searchText != '') {
+    filteredItems = filteredItems.filter((item) => {
+      let itemName = item.name.toLowerCase();
+      let substring = filters.searchText.toLowerCase();
+
+      return itemName.includes(substring);
+    });
+  }
+
+  renderItems(filteredItems);
+}
+
 modalElement.addEventListener('click', (event) => {
   if (event.target == modalElement) {
     modalElement.classList.add('closed');
   }
-})
+});
 
-renderItems(items);
+searchInput.addEventListener('input', (event) => {
+  filters.searchText = searchInput.value;
+  filtersUpdated();
+});
+
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    let panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+
+filtersUpdated();
