@@ -28,7 +28,6 @@ function renderItem(item) {
   let imgUrl = "";
   let btnClass = "";
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
-  let ordersDone = Math.floor(Math.random() * 10000);
 
   if (orderStock == 0) {
     imgUrl = "img/icons/logo-check-noitems.svg"
@@ -65,7 +64,7 @@ function renderItem(item) {
           <span>${textReviews}</span>
         </div>
         <div class="orders color-txt-stats">
-          <span class="str-text">${ordersDone}</span>
+          <span class="str-text">${item.orderInfo.orders}</span>
           <span>orders</span>
         </div>
       </div>
@@ -89,7 +88,6 @@ function renderModal(item) {
   let orderStock = item.orderInfo.inStock;
   let reviews = item.orderInfo.reviews;
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
-  let ordersDone = Math.floor(Math.random() * 10000);
 
   return `
     <div class="modal-content">
@@ -107,7 +105,7 @@ function renderModal(item) {
                 <span>${textReviews}</span>
             </div>
             <div class="orders color-txt-stats">
-                <span class="str-text">${ordersDone}</span>
+                <span class="str-text">${item.orderInfo.orders}</span>
                 <span>orders</span>
             </div>
             </div>
