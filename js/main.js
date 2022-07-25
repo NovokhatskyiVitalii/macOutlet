@@ -1,4 +1,4 @@
-let acc = document.getElementsByClassName("accordion");
+let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
 let searchInput = document.getElementById('search-input');
 let filters = {
@@ -149,6 +149,22 @@ function filtersUpdated() {
   renderItems(filteredItems);
 }
 
+function applyOpenPanelEvent(buttonElement, panelElement) {
+  buttonElement.addEventListener("click", function () {
+    buttonElement.classList.toggle("active");
+    if (panelElement.style.maxHeight) {
+      panelElement.style.maxHeight = null;
+    } else {
+      panelElement.style.maxHeight = panelElement.scrollHeight + "px";
+    }
+  });
+}
+
+for (let accordionButton of accordionButtons) {
+  let panel = accordionButton.nextElementSibling;
+  applyOpenPanelEvent(accordionButton, panel);
+}
+
 modalElement.addEventListener('click', (event) => {
   if (event.target == modalElement) {
     modalElement.classList.add('closed');
@@ -159,17 +175,5 @@ searchInput.addEventListener('input', (event) => {
   filters.searchText = searchInput.value;
   filtersUpdated();
 });
-
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    let panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
-}
 
 filtersUpdated();
