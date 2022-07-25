@@ -378,8 +378,7 @@ img {
 }
 
 .accordion-filters {
-  margin-right: 55px;
-  margin-right: 55px;
+  margin-right: 85px;
   height: fit-content;
   max-width: min-content;
 }
@@ -421,6 +420,7 @@ img {
   border-radius: 5px 5px 5px 5px;
   border: 1px solid #a2a2a270;
   overflow: hidden;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
 
 .panel {
@@ -625,7 +625,7 @@ img {
   color: #3b3e66;
 }
 
-.btn-modal {
+.card-btn {
   margin-top: 31px;
   padding: 13px 26px;
   cursor: pointer;

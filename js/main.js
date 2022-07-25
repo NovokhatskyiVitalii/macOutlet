@@ -81,6 +81,13 @@ function renderModal(item) {
   let orderStock = item.orderInfo.inStock;
   let reviews = item.orderInfo.reviews;
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
+  let btnClass = "";
+
+  if (orderStock == 0) {
+    btnClass = "card-btn disabled"
+  } else {
+    btnClass = "card-btn"
+  }
 
   return `
     <div class="modal-content">
@@ -115,7 +122,7 @@ function renderModal(item) {
             <div class="modal-price">
                 <span class="price">$${item.price}</span>
                 <span class="modal-str-text">Stock: <span class="txt-price">${orderStock}</span> pcs.</span>
-                <button class="btn-modal">Add to cart</button>
+                <button class="${btnClass}">Add to cart</button>
             </div>
     </div>
   `;
