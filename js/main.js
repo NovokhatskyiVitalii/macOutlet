@@ -18,11 +18,10 @@ function getReviewsAsText(reviews) {
 function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let orderReviews = item.orderInfo.reviews;
-  let imgUrl = "";
-  let btnClass = "";
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
+  let isDisabled = orderStock == 0;
 
-  if (orderStock == 0) {
+  if (isDisabled) {
     imgUrl = "img/icons/logo-check-noitems.svg"
     btnClass = "card-btn disabled"
   } else {
@@ -46,7 +45,7 @@ function renderItem(item) {
           </div>
         </div>
         <span class="color-txt-info">Price: <span class="str-text">${item.price}</span> $</span>
-        <button onclick="openModal(${item.id})" class="${btnClass}">Add to cart</button>
+        <button onclick="openModal(${item.id})" class="${btnClass}" ${isDisabled ? 'disabled' : ''} >Add to cart</button>
       </div>
       <div class="stats-card">
         <div class="like-stats-img">
@@ -82,8 +81,9 @@ function renderModal(item) {
   let reviews = item.orderInfo.reviews;
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
   let btnClass = "";
+  let isDisabled = orderStock == 0;
 
-  if (orderStock == 0) {
+  if (isDisabled) {
     btnClass = "card-btn disabled"
   } else {
     btnClass = "card-btn"
@@ -122,7 +122,7 @@ function renderModal(item) {
             <div class="modal-price">
                 <span class="price">$${item.price}</span>
                 <span class="modal-str-text">Stock: <span class="txt-price">${orderStock}</span> pcs.</span>
-                <button class="${btnClass}">Add to cart</button>
+                <button class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
             </div>
     </div>
   `;
