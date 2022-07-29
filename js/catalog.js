@@ -1,3 +1,5 @@
+import items from './items.js';
+
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
 let searchInput = document.getElementById('search-input');
@@ -19,6 +21,8 @@ function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let orderReviews = item.orderInfo.reviews;
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
+  let imgUrl = '';
+  let btnClass = '';
   let isDisabled = orderStock == 0;
 
   if (isDisabled) {
@@ -167,20 +171,24 @@ function applyOpenPanelEvent(buttonElement, panelElement) {
   });
 }
 
-for (let accordionButton of accordionButtons) {
-  let panel = accordionButton.nextElementSibling;
-  applyOpenPanelEvent(accordionButton, panel);
-}
+export default function initCatalog() {
+  window.openModal = openModal;
 
-modalElement.addEventListener('click', (event) => {
-  if (event.target == modalElement) {
-    modalElement.classList.add('closed');
+  for (let accordionButton of accordionButtons) {
+    let panel = accordionButton.nextElementSibling;
+    applyOpenPanelEvent(accordionButton, panel);
   }
-});
 
-searchInput.addEventListener('input', (event) => {
-  filters.searchText = searchInput.value;
+  modalElement.addEventListener('click', (event) => {
+    if (event.target == modalElement) {
+      modalElement.classList.add('closed');
+    }
+  });
+
+  searchInput.addEventListener('input', (event) => {
+    filters.searchText = searchInput.value;
+    filtersUpdated();
+  });
+
   filtersUpdated();
-});
-
-filtersUpdated();
+}

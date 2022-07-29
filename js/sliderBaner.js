@@ -30,4 +30,10 @@ const showSlides = (n) => {
     slides[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " active";
 };
-showSlides(slideIndex);
+
+export default function initSliderBanner() {
+    window.plusSlide = plusSlide;
+    window.minusSlide = minusSlide;
+    window.currentSlide = currentSlide;
+    showSlides();
+}
