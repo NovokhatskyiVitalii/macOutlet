@@ -1,0 +1,13 @@
+// layout
+@import 'layout/reset';
+@import 'layout/base';
+@import 'layout/header';
+
+// page components
+@import './components/slider';
+@import './components/search';
+@import './components/search-banner';
+@import './components/catalog';
+@import './components/stats-card';
+@import './components/modal';
+@import './components/tiny-elements';

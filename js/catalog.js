@@ -1,16 +1,11 @@
-let acc = document.getElementsByClassName("accordion");
+import items from './items.js';
 
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    let panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
-}
+let accordionButtons = document.getElementsByClassName("accordion");
+let modalElement = document.getElementById('modal');
+let searchInput = document.getElementById('search-input');
+let filters = {
+  searchText: ''
+};
 
 function getReviewsAsText(reviews) {
   if (reviews >= 50) {
@@ -25,11 +20,12 @@ function getReviewsAsText(reviews) {
 function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let orderReviews = item.orderInfo.reviews;
-  let imgUrl = "";
-  let btnClass = "";
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
+  let imgUrl = '';
+  let btnClass = '';
+  let isDisabled = orderStock == 0;
 
-  if (orderStock == 0) {
+  if (isDisabled) {
     imgUrl = "img/icons/logo-check-noitems.svg"
     btnClass = "card-btn disabled"
   } else {
@@ -53,7 +49,7 @@ function renderItem(item) {
           </div>
         </div>
         <span class="color-txt-info">Price: <span class="str-text">${item.price}</span> $</span>
-        <button onclick="openModal(${item.id})" class="${btnClass}">Add to cart</button>
+        <button onclick="openModal(${item.id})" class="${btnClass}" ${isDisabled ? 'disabled' : ''} >Add to cart</button>
       </div>
       <div class="stats-card">
         <div class="like-stats-img">
@@ -88,6 +84,14 @@ function renderModal(item) {
   let orderStock = item.orderInfo.inStock;
   let reviews = item.orderInfo.reviews;
   let textReviews = getReviewsAsText(item.orderInfo.reviews);
+  let btnClass = "";
+  let isDisabled = orderStock == 0;
+
+  if (isDisabled) {
+    btnClass = "card-btn disabled"
+  } else {
+    btnClass = "card-btn"
+  }
 
   return `
     <div class="modal-content">
@@ -122,13 +126,11 @@ function renderModal(item) {
             <div class="modal-price">
                 <span class="price">$${item.price}</span>
                 <span class="modal-str-text">Stock: <span class="txt-price">${orderStock}</span> pcs.</span>
-                <button class="btn-modal">Add to cart</button>
+                <button class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
             </div>
     </div>
   `;
 }
-
-let modalElement = document.getElementById('modal');
 
 function openModal(id) {
   let item = items.find((element) => {
@@ -143,10 +145,50 @@ function openModal(id) {
   modalElement.classList.remove('closed');
 }
 
-modalElement.addEventListener('click', (event) => {
-  if (event.target == modalElement) {
-    modalElement.classList.add('closed');
-  }
-})
+function filtersUpdated() {
+  let filteredItems = JSON.parse(JSON.stringify(items));
 
-renderItems(items);
+  if (filters.searchText != '') {
+    filteredItems = filteredItems.filter((item) => {
+      let itemName = item.name.toLowerCase();
+      let substring = filters.searchText.toLowerCase();
+
+      return itemName.includes(substring);
+    });
+  }
+
+  renderItems(filteredItems);
+}
+
+function applyOpenPanelEvent(buttonElement, panelElement) {
+  buttonElement.addEventListener("click", function () {
+    buttonElement.classList.toggle("active");
+    if (panelElement.style.maxHeight) {
+      panelElement.style.maxHeight = null;
+    } else {
+      panelElement.style.maxHeight = panelElement.scrollHeight + "px";
+    }
+  });
+}
+
+export default function initCatalog() {
+  window.openModal = openModal;
+
+  for (let accordionButton of accordionButtons) {
+    let panel = accordionButton.nextElementSibling;
+    applyOpenPanelEvent(accordionButton, panel);
+  }
+
+  modalElement.addEventListener('click', (event) => {
+    if (event.target == modalElement) {
+      modalElement.classList.add('closed');
+    }
+  });
+
+  searchInput.addEventListener('input', (event) => {
+    filters.searchText = searchInput.value;
+    filtersUpdated();
+  });
+
+  filtersUpdated();
+}
