@@ -1,0 +1,28 @@
+.stats-card {
+  background: #dae2ea;
+  display: flex;
+  padding-top: 19px;
+  height: 86px;
+
+  .stats-text {
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .like-stats-img {
+    padding: 3px 12px 0 14px;
+  }
+  
+  .orders {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .color-txt-stats {
+    color: #3b3e66;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

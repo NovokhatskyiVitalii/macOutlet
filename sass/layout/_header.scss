@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .header-logo {
+    padding: 10px 0 24px 8px;
+  }
+  
+  .header-bin {
+    padding: 6px 10px 0 0;
+  }
+  
+  .ellipse {
+    position: relative;
+    left: 24px;
+    z-index: -1;
+  }
+  
+  .cart {
+    position: relative;
+    left: -11px;
+    top: 10px;
+  }
+}

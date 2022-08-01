@@ -1,0 +1,23 @@
+{
+  "name": "modulejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass-watch": "sass --watch ./sass/style.scss ./style.css",
+    "sass": "sass ./sass/style.scss ./style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NovokhatskyiVitalii/MacOutlet.git"
+  },
+  "author": "Vitalii Novokhatskyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NovokhatskyiVitalii/MacOutlet/issues"
+  },
+  "homepage": "https://github.com/NovokhatskyiVitalii/MacOutlet#readme",
+  "dependencies": {
+    "sass": "^1.54.0"
+  }
+}

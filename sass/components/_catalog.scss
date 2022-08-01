@@ -1,0 +1,8 @@
+.catalog {
+  margin: 34px 0 34px 0;
+  display: flex;
+  flex-direction: row;
+
+  @import "catalog/filters";
+  @import "catalog/catalog-items";
+}

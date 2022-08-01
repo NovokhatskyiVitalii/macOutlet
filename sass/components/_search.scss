@@ -1,0 +1,35 @@
+.search {
+  margin-top: 32px;
+  position: relative;
+
+  .inp-search {
+    width: 100%;
+    height: 60px;
+    height: 60px;
+    padding-left: 68px;
+    border-radius: 5px;
+    border: 1px solid #dddada;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .logo-search {
+    position: absolute;
+    left: 3%;
+    top: 35%;
+    cursor: pointer;
+  }
+
+  .logo-filter {
+    position: absolute;
+    right: 7%;
+    top: 16%;
+    cursor: pointer;
+  }
+
+  .logo-sort {
+    position: absolute;
+    right: 2%;
+    top: 16%;
+    cursor: pointer;
+  }
+}
