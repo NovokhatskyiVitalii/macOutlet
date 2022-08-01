@@ -4,8 +4,13 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  color: #ffffff;
+  color: #e5e5e5;
   background-color: #0e49b5;
+
+  &.disabled {
+    color: white;
+    background: #dddddd;
+  }
 }
 
 .color-txt-info {
