@@ -3,8 +3,16 @@ import items from './items.js';
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
 let searchInput = document.getElementById('search-input');
+
+const MAX_PRICE = getMaxItemPrice();
+const MIN_PRICE = getMinItemPrice();
+
 let filters = {
-  searchText: ''
+  searchText: '',
+  price: {
+    from: MIN_PRICE,
+    to: MAX_PRICE,
+  }
 };
 
 function getReviewsAsText(reviews) {
@@ -157,6 +165,21 @@ function filtersUpdated() {
     });
   }
 
+  if (filters.price.from != '') {
+    filteredItems = filteredItems.filter((item) => {
+      return item.price >= filters.price.from;
+    });
+  }
+
+  if (filters.price.to != '') {
+    filteredItems = filteredItems.filter((item) => {
+      return item.price <= filters.price.to;
+    });
+  }
+
+
+  
+
   renderItems(filteredItems);
 }
 
@@ -169,6 +192,34 @@ function applyOpenPanelEvent(buttonElement, panelElement) {
       panelElement.style.maxHeight = panelElement.scrollHeight + "px";
     }
   });
+}
+
+function getMaxItemPrice() {
+  const prices = items.map((item) => {
+    return item.price;
+  });
+
+  return prices.reduce((prevValue, currentValue) => {
+    return prevValue < currentValue ? currentValue : prevValue;
+  });
+}
+
+function getMinItemPrice() {
+  const prices = items.map((item) => {
+    return item.price;
+  });
+
+  return prices.reduce((prevValue, currentValue) => {
+    return prevValue > currentValue ? currentValue : prevValue;
+  });
+}
+
+function normalizePriceInput(inputElement) {
+  if (inputElement.value < MIN_PRICE) {
+    inputElement.value = MIN_PRICE;
+  } else if (inputElement.value > MAX_PRICE) {
+    inputElement.value = MAX_PRICE;
+  }
 }
 
 export default function initCatalog() {
@@ -187,6 +238,27 @@ export default function initCatalog() {
 
   searchInput.addEventListener('input', (event) => {
     filters.searchText = searchInput.value;
+    filtersUpdated();
+  });
+
+
+  let priceFromInput = document.getElementById('price-from');
+  priceFromInput.value = MIN_PRICE;
+  priceFromInput.addEventListener('change', () => {
+
+    normalizePriceInput(priceFromInput);
+
+    filters.price.from = priceFromInput.value;
+    filtersUpdated();
+  });
+
+  let priceToInput = document.getElementById('price-to');
+  priceToInput.value = MAX_PRICE;
+  priceToInput.addEventListener('change', () => {
+
+    normalizePriceInput(priceToInput);
+
+    filters.price.to = priceToInput.value;
     filtersUpdated();
   });
 
