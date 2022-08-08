@@ -185,8 +185,45 @@ function filtersUpdated() {
     });
   }
 
+  if (filters.colors.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      for (let colorCode of filters.colors) {
+        if (item.color.includes(colorCode)) {
+          return true;
+        }
+      }
 
+      return false;
+    });
+  }
 
+  if (filters.storage.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      return filters.storage.includes(item.storage);
+    });
+  }
+
+  if (filters.os.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      return filters.os.includes(item.os);
+    })
+  }
+
+  if (filters.display.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      if (item.display === null) {
+        return false;
+      }
+
+      for (let rangeItem of filters.display) {
+        if (rangeItem.min <= item.display && (rangeItem.max === null || item.display <= rangeItem.max)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+  }
 
   renderItems(filteredItems);
 }
@@ -257,12 +294,12 @@ function checkMemoryFilters(checkboxElement) {
   }
 }
 
-function addMemoryToFilters(memoryCode) {
-  filters.storage.push(memoryCode);
+function addMemoryToFilters(memory) {
+  filters.storage.push(Number(memory));
 }
 
-function removeMemoryFromFilters(memoryCode) {
-  let pos = filters.storage.indexOf(memoryCode);
+function removeMemoryFromFilters(memory) {
+  let pos = filters.storage.indexOf(Number(memory));
   if (pos != -1) {
     filters.storage.splice(pos, 1);
   }
@@ -302,9 +339,12 @@ function checkDisplayFilters(checkboxElement) {
 }
 
 function addDisplayToFilters(displayMin, displayMax) {
+  const min = Number(displayMin);
+  const max = displayMax != '' ? Number(displayMax) : null;
+
   const displayRange = {
-    min: displayMin,
-    max: displayMax,
+    min: min,
+    max: max,
   };
 
   filters.display.push(displayRange);
@@ -312,8 +352,11 @@ function addDisplayToFilters(displayMin, displayMax) {
 
 
 function removeDisplayFromFilters(displayMin, displayMax) {
+  const min = Number(displayMin);
+  const max = displayMax != '' ? Number(displayMax) : null;
+
   const pos = filters.display.findIndex((rangeItem) => {
-    if (rangeItem.min == displayMin && rangeItem.max == displayMax) {
+    if (rangeItem.min === min && rangeItem.max === max) {
       return true;
     }
     return false;
@@ -367,6 +410,7 @@ export default function initCatalog() {
   for (let colorCheckBox of colorCheckBoxes) {
     colorCheckBox.addEventListener('change', (event) => {
       checkColorFilters(event.currentTarget);
+      filtersUpdated();
     });
 
     checkColorFilters(colorCheckBox);
@@ -375,6 +419,7 @@ export default function initCatalog() {
   for (let storageCheckBox of storageCheckBoxes) {
     storageCheckBox.addEventListener('change', (event) => {
       checkMemoryFilters(event.currentTarget);
+      filtersUpdated();
     });
 
     checkMemoryFilters(storageCheckBox);
@@ -383,6 +428,7 @@ export default function initCatalog() {
   for (let osCheckBox of osCheckBoxes) {
     osCheckBox.addEventListener('change', (event) => {
       checkOsFilters(event.currentTarget);
+      filtersUpdated();
     });
 
     checkOsFilters(osCheckBox);
@@ -392,6 +438,7 @@ export default function initCatalog() {
     displayCheckBox.addEventListener('change', (event) => {
       checkDisplayFilters(event.currentTarget);
       console.log(filters.display)
+      filtersUpdated();
     });
 
     checkDisplayFilters(displayCheckBox);

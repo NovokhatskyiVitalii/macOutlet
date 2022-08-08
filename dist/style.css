@@ -204,7 +204,8 @@ img {
   .catalog .accordion-filters {
     margin-right: 85px;
     height: fit-content;
-    max-width: min-content; }
+    max-width: min-content;
+    user-select: none; }
     .catalog .accordion-filters .accordion-wrap {
       border-radius: 5px 5px 5px 5px;
       border: 1px solid #a2a2a270;
@@ -308,7 +309,8 @@ img {
       border: 1px solid #e0e0e0;
       box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
       border-radius: 10px;
-      overflow: hidden; }
+      overflow: hidden;
+      height: fit-content; }
     .catalog .items .like-img {
       position: absolute;
       top: 18px;
