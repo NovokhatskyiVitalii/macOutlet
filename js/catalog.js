@@ -3,6 +3,10 @@ import items from './items.js';
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
 let searchInput = document.getElementById('search-input');
+let colorCheckBoxes = document.getElementsByClassName('color-checkbox');
+let storageCheckBoxes = document.getElementsByClassName('storage-checkbox');
+let osCheckBoxes = document.getElementsByClassName('os-checkbox');
+let displayCheckBoxes = document.getElementsByClassName('display-checkbox');
 
 const MAX_PRICE = getMaxItemPrice();
 const MIN_PRICE = getMinItemPrice();
@@ -12,7 +16,11 @@ let filters = {
   price: {
     from: MIN_PRICE,
     to: MAX_PRICE,
-  }
+  },
+  colors: [],
+  storage: [],
+  os: [],
+  display: []
 };
 
 function getReviewsAsText(reviews) {
@@ -122,7 +130,7 @@ function renderModal(item) {
             </div>
             </div>
             <div class="about-descr">
-                <span class="about">Color:<span class="about-text">${item.color}</span></span>
+                <span class="about">Color:<span class="about-text">${item.color.join(', ')}</span></span>
                 <span class="about">Operating System:<span class="about-text">${item.os}</span></span>
                 <span class="about">Chip:<span class="about-text">${item.name}</span></span>
                 <span class="about">Height:<span class="about-text">${item.size.height} cm</span></span>
@@ -178,7 +186,7 @@ function filtersUpdated() {
   }
 
 
-  
+
 
   renderItems(filteredItems);
 }
@@ -222,6 +230,100 @@ function normalizePriceInput(inputElement) {
   }
 }
 
+function checkColorFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addColorToFilters(checkboxElement.dataset.code);
+  } else {
+    removeColorFromFilters(checkboxElement.dataset.code);
+  }
+}
+
+function addColorToFilters(colorCode) {
+  filters.colors.push(colorCode)
+}
+
+function removeColorFromFilters(colorCode) {
+  let pos = filters.colors.indexOf(colorCode);
+  if (pos != -1) {
+    filters.colors.splice(pos, 1);
+  }
+}
+
+function checkMemoryFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addMemoryToFilters(checkboxElement.dataset.memory);
+  } else {
+    removeMemoryFromFilters(checkboxElement.dataset.memory);
+  }
+}
+
+function addMemoryToFilters(memoryCode) {
+  filters.storage.push(memoryCode);
+}
+
+function removeMemoryFromFilters(memoryCode) {
+  let pos = filters.storage.indexOf(memoryCode);
+  if (pos != -1) {
+    filters.storage.splice(pos, 1);
+  }
+}
+
+function checkOsFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addOsToFilters(checkboxElement.dataset.os);
+  } else {
+    removeOsFromFilters(checkboxElement.dataset.os);
+  }
+}
+
+function addOsToFilters(osCode) {
+  filters.os.push(osCode);
+}
+
+function removeOsFromFilters(osCode) {
+  let pos = filters.os.indexOf(osCode);
+  if (pos != -1) {
+    filters.os.splice(pos, 1);
+  }
+}
+
+function checkDisplayFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addDisplayToFilters(
+      checkboxElement.dataset.displayMin,
+      checkboxElement.dataset.displayMax,
+    );
+  } else {
+    removeDisplayFromFilters(
+      checkboxElement.dataset.displayMin,
+      checkboxElement.dataset.displayMax,
+    );
+  }
+}
+
+function addDisplayToFilters(displayMin, displayMax) {
+  const displayRange = {
+    min: displayMin,
+    max: displayMax,
+  };
+
+  filters.display.push(displayRange);
+}
+
+
+function removeDisplayFromFilters(displayMin, displayMax) {
+  const pos = filters.display.findIndex((rangeItem) => {
+    if (rangeItem.min == displayMin && rangeItem.max == displayMax) {
+      return true;
+    }
+    return false;
+  });
+
+  if (pos != -1) {
+    filters.display.splice(pos, 1);
+  }
+}
+
 export default function initCatalog() {
   window.openModal = openModal;
 
@@ -261,6 +363,39 @@ export default function initCatalog() {
     filters.price.to = priceToInput.value;
     filtersUpdated();
   });
+
+  for (let colorCheckBox of colorCheckBoxes) {
+    colorCheckBox.addEventListener('change', (event) => {
+      checkColorFilters(event.currentTarget);
+    });
+
+    checkColorFilters(colorCheckBox);
+  }
+
+  for (let storageCheckBox of storageCheckBoxes) {
+    storageCheckBox.addEventListener('change', (event) => {
+      checkMemoryFilters(event.currentTarget);
+    });
+
+    checkMemoryFilters(storageCheckBox);
+  }
+
+  for (let osCheckBox of osCheckBoxes) {
+    osCheckBox.addEventListener('change', (event) => {
+      checkOsFilters(event.currentTarget);
+    });
+
+    checkOsFilters(osCheckBox);
+  }
+
+  for (let displayCheckBox of displayCheckBoxes) {
+    displayCheckBox.addEventListener('change', (event) => {
+      checkDisplayFilters(event.currentTarget);
+      console.log(filters.display)
+    });
+
+    checkDisplayFilters(displayCheckBox);
+  }
 
   filtersUpdated();
 }
