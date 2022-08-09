@@ -367,8 +367,26 @@ function removeDisplayFromFilters(displayMin, displayMax) {
   }
 }
 
+function initBannerSearch() {
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+
+  openBannerSearchFilterButton.addEventListener('click', () => {
+    bannerSearchOrder.classList.remove('show');
+    bannerSearchFilter.classList.toggle('show');
+  });
+
+  openBannerSearchOrderButton.addEventListener('click', () => {
+    bannerSearchFilter.classList.remove('show');
+    bannerSearchOrder.classList.toggle('show');
+  });
+}
+
 export default function initCatalog() {
   window.openModal = openModal;
+  initBannerSearch();
 
   for (let accordionButton of accordionButtons) {
     let panel = accordionButton.nextElementSibling;
@@ -385,7 +403,6 @@ export default function initCatalog() {
     filters.searchText = searchInput.value;
     filtersUpdated();
   });
-
 
   let priceFromInput = document.getElementById('price-from');
   priceFromInput.value = MIN_PRICE;

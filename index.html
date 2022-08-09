@@ -101,27 +101,50 @@
     </section>
 
     <section class="search">
-      <img src="img/icons/search.svg" class="logo-search" alt="logo-search">
-      <img src="img/icons/Filter.svg" id="open-filter" class="logo-filter" alt="logo-filter">
-      <img src="img/icons/Sort.svg" class="logo-sort" alt="logo-sort">
+      <div class="logo-search">
+        <img src="img/icons/search.svg" alt="logo-search">
+      </div>
+      <div class="banner-search">
+        <img src="img/icons/Filter.svg" id="open-banner-search-filter" class="logo-filter" alt="logo-filter">
+        <img src="img/icons/Sort.svg" id="open-banner-search-order" class="logo-sort" alt="logo-sort">
+      </div>
       <input id="search-input" type="search" class="inp-search" placeholder="Enter device name...">
-    </section>
+      <div class="banner-search-filter">
+        <div class="search-content">
+          <div class="block-search">
+            <span>Category</span>
+            <input type="text">
+          </div>
+          <div class="block-search">
+            <span>Stock</span>
+            <input type="text">
+          </div>
+        </div>
+        <div class="footer-banner">
+          <button class="btn-filter">Filter results</button>
+        </div>
+      </div>
 
-    <div class="search-banner">
-      <div class="search-content">
-        <div class="block-search">
-          <span>Category</span>
-          <input type="text">
+      <div class="banner-search-order">
+        <div class="txt-banner">
+          <span>Order by price</span>
         </div>
-        <div class="block-search">
-          <span>Stock</span>
-          <input type="text">
+        <div class="buttons-list">
+          <div class="button is-active">
+            <span>Default</span>
+          </div>
+          <div class="button with-image is-active">
+            <img src="img/icons/img1-search-banner.svg" alt="">
+            <span>Ascending</span>
+          </div>
+          <div class="button with-image">
+            <img src="img/icons/img2-search-banner.svg" alt="">
+            <span>Descending</span>
+          </div>
         </div>
       </div>
-      <div class="footer-banner">
-        <button class="btn-filter">Filter results</button>
-      </div>
-    </div>
+
+    </section>
 
     <section class="catalog">
       <div class="accordion-filters" id="filters">
@@ -180,7 +203,7 @@
                 <label for="color-grey">Grey</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-yellow"  class="color-checkbox" data-code="Yellow" type="checkbox">
+                <input id="color-yellow" class="color-checkbox" data-code="Yellow" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-yellow">Yellow</label>
               </div>
@@ -258,27 +281,32 @@
           <div class="panel">
             <div class="panel-content display">
               <div class="checkbox-block">
-                <input id="display-2-5" class="display-checkbox" data-display-min="2" data-display-max="5" type="checkbox">
+                <input id="display-2-5" class="display-checkbox" data-display-min="2" data-display-max="5"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-2-5">2-5 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-5-7" class="display-checkbox" data-display-min="5" data-display-max="7"type="checkbox">
+                <input id="display-5-7" class="display-checkbox" data-display-min="5" data-display-max="7"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-5-7">5-7 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-7-12" class="display-checkbox"  data-display-min="7" data-display-max="12" type="checkbox">
+                <input id="display-7-12" class="display-checkbox" data-display-min="7" data-display-max="12"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-7-12">7-12 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-12-16" class="display-checkbox"  data-display-min="12" data-display-max="16" type="checkbox">
+                <input id="display-12-16" class="display-checkbox" data-display-min="12" data-display-max="16"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-12-16">12-16 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-16" class="display-checkbox"  data-display-min="16" data-display-max="" type="checkbox">
+                <input id="display-16" class="display-checkbox" data-display-min="16" data-display-max=""
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-16">+16 inch</label>
               </div>
