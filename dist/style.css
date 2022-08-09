@@ -174,8 +174,12 @@ img {
     top: 16%; }
     .search .banner-search .logo-filter {
       cursor: pointer; }
+      .search .banner-search .logo-filter.active {
+        content: url(21258206029920c3d41f.svg); }
     .search .banner-search .logo-sort {
       cursor: pointer; }
+      .search .banner-search .logo-sort.active {
+        content: url(ddddebde6d35419890d3.svg); }
 
 .banner-search-filter {
   width: 287px;

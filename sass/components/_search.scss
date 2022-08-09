@@ -26,10 +26,18 @@
 
     .logo-filter {
       cursor: pointer;
+
+      &.active {
+        content: url('/img/icons/Group1.svg');
+      }
     }
 
     .logo-sort {
       cursor: pointer;
+
+      &.active {
+        content: url('/img/icons/Sort-active.svg');
+      }
     }
   }
 }

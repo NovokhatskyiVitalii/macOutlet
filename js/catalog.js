@@ -20,7 +20,8 @@ let filters = {
   colors: [],
   storage: [],
   os: [],
-  display: []
+  display: [],
+  sortDirection: ''
 };
 
 function getReviewsAsText(reviews) {
@@ -225,6 +226,16 @@ function filtersUpdated() {
     });
   }
 
+  if (filters.sortDirection == 'asc') {
+    filteredItems.sort((a, b) => {
+      return a.price > b.price;
+    });
+  } else if (filters.sortDirection == 'desc') {
+    filteredItems.sort((a, b) => {
+      return a.price < b.price;
+    });
+  }
+
   renderItems(filteredItems);
 }
 
@@ -350,7 +361,6 @@ function addDisplayToFilters(displayMin, displayMax) {
   filters.display.push(displayRange);
 }
 
-
 function removeDisplayFromFilters(displayMin, displayMax) {
   const min = Number(displayMin);
   const max = displayMax != '' ? Number(displayMax) : null;
@@ -372,16 +382,42 @@ function initBannerSearch() {
   const bannerSearchFilter = document.querySelector('.banner-search-filter');
   const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
   const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const searchOrderButtons = document.querySelectorAll('.banner-search-order .button');
 
   openBannerSearchFilterButton.addEventListener('click', () => {
     bannerSearchOrder.classList.remove('show');
-    bannerSearchFilter.classList.toggle('show');
-  });
+    openBannerSearchOrderButton.classList.remove('active');
 
+    bannerSearchFilter.classList.toggle('show');
+    openBannerSearchFilterButton.classList.toggle('active');
+  });
+  
+  
   openBannerSearchOrderButton.addEventListener('click', () => {
     bannerSearchFilter.classList.remove('show');
+    openBannerSearchFilterButton.classList.remove('active');
+
     bannerSearchOrder.classList.toggle('show');
+    openBannerSearchOrderButton.classList.toggle('active');
   });
+
+  searchOrderButtons.forEach((element) => {
+    element.addEventListener('click', () => {
+
+      if (element.classList.contains('is-active')) {
+        return;
+      }
+
+      searchOrderButtons.forEach((element) => {
+        element.classList.remove('is-active');
+      });
+      element.classList.add('is-active');
+      filters.sortDirection = element.dataset.dir;
+
+      filtersUpdated();
+    })
+  });
+
 }
 
 export default function initCatalog() {
@@ -454,7 +490,6 @@ export default function initCatalog() {
   for (let displayCheckBox of displayCheckBoxes) {
     displayCheckBox.addEventListener('change', (event) => {
       checkDisplayFilters(event.currentTarget);
-      console.log(filters.display)
       filtersUpdated();
     });
 
