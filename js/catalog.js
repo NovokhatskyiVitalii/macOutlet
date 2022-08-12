@@ -3,8 +3,25 @@ import items from './items.js';
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
 let searchInput = document.getElementById('search-input');
+let colorCheckBoxes = document.getElementsByClassName('color-checkbox');
+let storageCheckBoxes = document.getElementsByClassName('storage-checkbox');
+let osCheckBoxes = document.getElementsByClassName('os-checkbox');
+let displayCheckBoxes = document.getElementsByClassName('display-checkbox');
+
+const MAX_PRICE = getMaxItemPrice();
+const MIN_PRICE = getMinItemPrice();
+
 let filters = {
-  searchText: ''
+  searchText: '',
+  price: {
+    from: MIN_PRICE,
+    to: MAX_PRICE,
+  },
+  colors: [],
+  storage: [],
+  os: [],
+  display: [],
+  sortDirection: ''
 };
 
 function getReviewsAsText(reviews) {
@@ -114,7 +131,7 @@ function renderModal(item) {
             </div>
             </div>
             <div class="about-descr">
-                <span class="about">Color:<span class="about-text">${item.color}</span></span>
+                <span class="about">Color:<span class="about-text">${item.color.join(', ')}</span></span>
                 <span class="about">Operating System:<span class="about-text">${item.os}</span></span>
                 <span class="about">Chip:<span class="about-text">${item.name}</span></span>
                 <span class="about">Height:<span class="about-text">${item.size.height} cm</span></span>
@@ -157,6 +174,68 @@ function filtersUpdated() {
     });
   }
 
+  if (filters.price.from != '') {
+    filteredItems = filteredItems.filter((item) => {
+      return item.price >= filters.price.from;
+    });
+  }
+
+  if (filters.price.to != '') {
+    filteredItems = filteredItems.filter((item) => {
+      return item.price <= filters.price.to;
+    });
+  }
+
+  if (filters.colors.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      for (let colorCode of filters.colors) {
+        if (item.color.includes(colorCode)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+  }
+
+  if (filters.storage.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      return filters.storage.includes(item.storage);
+    });
+  }
+
+  if (filters.os.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      return filters.os.includes(item.os);
+    })
+  }
+
+  if (filters.display.length != 0) {
+    filteredItems = filteredItems.filter((item) => {
+      if (item.display === null) {
+        return false;
+      }
+
+      for (let rangeItem of filters.display) {
+        if (rangeItem.min <= item.display && (rangeItem.max === null || item.display <= rangeItem.max)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+  }
+
+  if (filters.sortDirection == 'asc') {
+    filteredItems.sort((a, b) => {
+      return a.price > b.price;
+    });
+  } else if (filters.sortDirection == 'desc') {
+    filteredItems.sort((a, b) => {
+      return a.price < b.price;
+    });
+  }
+
   renderItems(filteredItems);
 }
 
@@ -171,8 +250,179 @@ function applyOpenPanelEvent(buttonElement, panelElement) {
   });
 }
 
+function getMaxItemPrice() {
+  const prices = items.map((item) => {
+    return item.price;
+  });
+
+  return prices.reduce((prevValue, currentValue) => {
+    return prevValue < currentValue ? currentValue : prevValue;
+  });
+}
+
+function getMinItemPrice() {
+  const prices = items.map((item) => {
+    return item.price;
+  });
+
+  return prices.reduce((prevValue, currentValue) => {
+    return prevValue > currentValue ? currentValue : prevValue;
+  });
+}
+
+function normalizePriceInput(inputElement) {
+  if (inputElement.value < MIN_PRICE) {
+    inputElement.value = MIN_PRICE;
+  } else if (inputElement.value > MAX_PRICE) {
+    inputElement.value = MAX_PRICE;
+  }
+}
+
+function checkColorFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addColorToFilters(checkboxElement.dataset.code);
+  } else {
+    removeColorFromFilters(checkboxElement.dataset.code);
+  }
+}
+
+function addColorToFilters(colorCode) {
+  filters.colors.push(colorCode)
+}
+
+function removeColorFromFilters(colorCode) {
+  let pos = filters.colors.indexOf(colorCode);
+  if (pos != -1) {
+    filters.colors.splice(pos, 1);
+  }
+}
+
+function checkMemoryFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addMemoryToFilters(checkboxElement.dataset.memory);
+  } else {
+    removeMemoryFromFilters(checkboxElement.dataset.memory);
+  }
+}
+
+function addMemoryToFilters(memory) {
+  filters.storage.push(Number(memory));
+}
+
+function removeMemoryFromFilters(memory) {
+  let pos = filters.storage.indexOf(Number(memory));
+  if (pos != -1) {
+    filters.storage.splice(pos, 1);
+  }
+}
+
+function checkOsFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addOsToFilters(checkboxElement.dataset.os);
+  } else {
+    removeOsFromFilters(checkboxElement.dataset.os);
+  }
+}
+
+function addOsToFilters(osCode) {
+  filters.os.push(osCode);
+}
+
+function removeOsFromFilters(osCode) {
+  let pos = filters.os.indexOf(osCode);
+  if (pos != -1) {
+    filters.os.splice(pos, 1);
+  }
+}
+
+function checkDisplayFilters(checkboxElement) {
+  if (checkboxElement.checked) {
+    addDisplayToFilters(
+      checkboxElement.dataset.displayMin,
+      checkboxElement.dataset.displayMax,
+    );
+  } else {
+    removeDisplayFromFilters(
+      checkboxElement.dataset.displayMin,
+      checkboxElement.dataset.displayMax,
+    );
+  }
+}
+
+function addDisplayToFilters(displayMin, displayMax) {
+  const min = Number(displayMin);
+  const max = displayMax != '' ? Number(displayMax) : null;
+
+  const displayRange = {
+    min: min,
+    max: max,
+  };
+
+  filters.display.push(displayRange);
+}
+
+function removeDisplayFromFilters(displayMin, displayMax) {
+  const min = Number(displayMin);
+  const max = displayMax != '' ? Number(displayMax) : null;
+
+  const pos = filters.display.findIndex((rangeItem) => {
+    if (rangeItem.min === min && rangeItem.max === max) {
+      return true;
+    }
+    return false;
+  });
+
+  if (pos != -1) {
+    filters.display.splice(pos, 1);
+  }
+}
+
+function initBannerSearch() {
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const searchOrderButtons = document.querySelectorAll('.banner-search-order .button');
+
+  openBannerSearchFilterButton.addEventListener('click', () => {
+    bannerSearchOrder.classList.remove('show');
+    openBannerSearchOrderButton.classList.remove('active');
+
+    bannerSearchFilter.classList.toggle('show');
+    openBannerSearchFilterButton.classList.toggle('active');
+  });
+  
+  
+  openBannerSearchOrderButton.addEventListener('click', () => {
+    bannerSearchFilter.classList.remove('show');
+    openBannerSearchFilterButton.classList.remove('active');
+
+    bannerSearchOrder.classList.toggle('show');
+    openBannerSearchOrderButton.classList.toggle('active');
+  });
+
+  searchOrderButtons.forEach((element) => {
+    element.addEventListener('click', () => {
+
+      if (element.classList.contains('is-active')) {
+        return;
+      }
+
+      searchOrderButtons.forEach((element) => {
+        element.classList.remove('is-active');
+      });
+      element.classList.add('is-active');
+      filters.sortDirection = element.dataset.dir;
+
+      filtersUpdated();
+    })
+  });
+
+}
+
 export default function initCatalog() {
   window.openModal = openModal;
+  initBannerSearch();
 
   for (let accordionButton of accordionButtons) {
     let panel = accordionButton.nextElementSibling;
@@ -189,6 +439,62 @@ export default function initCatalog() {
     filters.searchText = searchInput.value;
     filtersUpdated();
   });
+
+  let priceFromInput = document.getElementById('price-from');
+  priceFromInput.value = MIN_PRICE;
+  priceFromInput.addEventListener('change', () => {
+
+    normalizePriceInput(priceFromInput);
+
+    filters.price.from = priceFromInput.value;
+    filtersUpdated();
+  });
+
+  let priceToInput = document.getElementById('price-to');
+  priceToInput.value = MAX_PRICE;
+  priceToInput.addEventListener('change', () => {
+
+    normalizePriceInput(priceToInput);
+
+    filters.price.to = priceToInput.value;
+    filtersUpdated();
+  });
+
+  for (let colorCheckBox of colorCheckBoxes) {
+    colorCheckBox.addEventListener('change', (event) => {
+      checkColorFilters(event.currentTarget);
+      filtersUpdated();
+    });
+
+    checkColorFilters(colorCheckBox);
+  }
+
+  for (let storageCheckBox of storageCheckBoxes) {
+    storageCheckBox.addEventListener('change', (event) => {
+      checkMemoryFilters(event.currentTarget);
+      filtersUpdated();
+    });
+
+    checkMemoryFilters(storageCheckBox);
+  }
+
+  for (let osCheckBox of osCheckBoxes) {
+    osCheckBox.addEventListener('change', (event) => {
+      checkOsFilters(event.currentTarget);
+      filtersUpdated();
+    });
+
+    checkOsFilters(osCheckBox);
+  }
+
+  for (let displayCheckBox of displayCheckBoxes) {
+    displayCheckBox.addEventListener('change', (event) => {
+      checkDisplayFilters(event.currentTarget);
+      filtersUpdated();
+    });
+
+    checkDisplayFilters(displayCheckBox);
+  }
 
   filtersUpdated();
 }

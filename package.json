@@ -2,10 +2,10 @@
   "name": "modulejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "sass-watch": "sass --watch ./sass/style.scss ./style.css",
-    "sass": "sass ./sass/style.scss ./style.css"
+    "watch": "webpack --watch",
+    "build": "webpack --node-env production",
+    "build-dev": "webpack"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,12 @@
     "url": "https://github.com/NovokhatskyiVitalii/MacOutlet/issues"
   },
   "homepage": "https://github.com/NovokhatskyiVitalii/MacOutlet#readme",
-  "dependencies": {
-    "sass": "^1.54.0"
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^13.0.2",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }

@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dist/style.css">
   <title>MacOutlet</title>
 </head>
 
@@ -101,27 +101,50 @@
     </section>
 
     <section class="search">
-      <img src="img/icons/search.svg" class="logo-search" alt="logo-search">
-      <img src="img/icons/Filter.svg" id="open-filter" class="logo-filter" alt="logo-filter">
-      <img src="img/icons/Sort.svg" class="logo-sort" alt="logo-sort">
+      <div class="logo-search">
+        <img src="img/icons/search.svg" alt="logo-search">
+      </div>
+      <div class="banner-search">
+        <img src="img/icons/Filter.svg" id="open-banner-search-filter" class="logo-filter" alt="logo-filter">
+        <img src="img/icons/Sort.svg" id="open-banner-search-order" class="logo-sort" alt="logo-sort">
+      </div>
       <input id="search-input" type="search" class="inp-search" placeholder="Enter device name...">
-    </section>
+      <div class="banner-search-filter">
+        <div class="search-content">
+          <div class="block-search">
+            <span>Category</span>
+            <input type="text">
+          </div>
+          <div class="block-search">
+            <span>Stock</span>
+            <input type="text">
+          </div>
+        </div>
+        <div class="footer-banner">
+          <button class="btn-filter">Filter results</button>
+        </div>
+      </div>
 
-    <div class="search-banner">
-      <div class="search-content">
-        <div class="block-search">
-          <span>Category</span>
-          <input type="text">
+      <div class="banner-search-order">
+        <div class="txt-banner">
+          <span>Order by price</span>
         </div>
-        <div class="block-search">
-          <span>Stock</span>
-          <input type="text">
+        <div class="buttons-list">
+          <div data-dir="" class="button is-active">
+            <span>Default</span>
+          </div>
+          <div data-dir="asc" class="button with-image">
+            <img src="img/icons/img1-search-banner.svg" alt="">
+            <span>Ascending</span>
+          </div>
+          <div data-dir="desc" class="button with-image">
+            <img src="img/icons/img2-search-banner.svg" alt="">
+            <span>Descending</span>
+          </div>
         </div>
       </div>
-      <div class="footer-banner">
-        <button class="btn-filter">Filter results</button>
-      </div>
-    </div>
+
+    </section>
 
     <section class="catalog">
       <div class="accordion-filters" id="filters">
@@ -131,11 +154,11 @@
             <div class="panel-content">
               <div class="input-block">
                 <span>From</span>
-                <input type="text">
+                <input id="price-from" type="number" min="0">
               </div>
               <div class="input-block">
                 <span>To</span>
-                <input type="text">
+                <input id="price-to" type="number" min="0">
               </div>
 
             </div>
@@ -145,42 +168,42 @@
           <div class="panel">
             <div class="panel-content colors">
               <div class="checkbox-block">
-                <input id="color-red" type="checkbox">
+                <input id="color-red" class="color-checkbox" data-code="Red" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-red">Red</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-black" type="checkbox">
+                <input id="color-black" class="color-checkbox" data-code="Black" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-black">Black</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-blue" type="checkbox">
+                <input id="color-blue" class="color-checkbox" data-code="Blue" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-blue">Blue</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-gold" type="checkbox">
+                <input id="color-gold" class="color-checkbox" data-code="Gold" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-gold">Gold</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-green" type="checkbox">
+                <input id="color-green" class="color-checkbox" data-code="Green" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-green">Green</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-white" type="checkbox">
+                <input id="color-white" class="color-checkbox" data-code="White" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-white">White</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-grey" type="checkbox">
+                <input id="color-grey" class="color-checkbox" data-code="Grey" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-grey">Grey</label>
               </div>
               <div class="checkbox-block">
-                <input id="color-yellow" type="checkbox">
+                <input id="color-yellow" class="color-checkbox" data-code="Yellow" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="color-yellow">Yellow</label>
               </div>
@@ -191,42 +214,42 @@
           <div class="panel">
             <div class="panel-content memory">
               <div class="checkbox-block">
-                <input id="memory-32gb" type="checkbox">
+                <input id="memory-32gb" class="storage-checkbox" data-memory="32" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-32gb">32 Gb</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-64gb" type="checkbox">
+                <input id="memory-64gb" class="storage-checkbox" data-memory="64" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-64gb">64 Gb</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-128gb" type="checkbox">
+                <input id="memory-128gb" class="storage-checkbox" data-memory="128" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-128gb">128 Gb</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-256gb" type="checkbox">
+                <input id="memory-256gb" class="storage-checkbox" data-memory="256" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-256gb">256 Gb</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-512gb" type="checkbox">
+                <input id="memory-512gb" class="storage-checkbox" data-memory="512" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-512gb">512 Gb</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-1tb" type="checkbox">
+                <input id="memory-1tb" class="storage-checkbox" data-memory="1024" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-1tb">1 TB</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-2tb" type="checkbox">
+                <input id="memory-2tb" class="storage-checkbox" data-memory="2048" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-2tb">2 TB</label>
               </div>
               <div class="checkbox-block">
-                <input id="memory-4tb" type="checkbox">
+                <input id="memory-4tb" class="storage-checkbox" data-memory="4096" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="memory-4tb">4 TB</label>
               </div>
@@ -237,24 +260,19 @@
           <div class="panel">
             <div class="panel-content os">
               <div class="checkbox-block">
-                <input id="os-ios" type="checkbox">
+                <input id="os-ios" class="os-checkbox" data-os="IOS" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="os-ios">IOS</label>
               </div>
               <div class="checkbox-block">
-                <input id="os-mac-os" type="checkbox">
+                <input id="os-mac-os" class="os-checkbox" data-os="macOS" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="os-mac-os">Mac OS</label>
               </div>
               <div class="checkbox-block">
-                <input id="os-tv-os" type="checkbox">
+                <input id="os-tv-os" class="os-checkbox" data-os="tvOS" type="checkbox">
                 <span class="checkmark"></span>
                 <label for="os-tv-os">tvOS</label>
-              </div>
-              <div class="checkbox-block">
-                <input id="os-watch-os" type="checkbox">
-                <span class="checkmark"></span>
-                <label for="os-watch-os">Watch OS</label>
               </div>
             </div>
           </div>
@@ -263,27 +281,32 @@
           <div class="panel">
             <div class="panel-content display">
               <div class="checkbox-block">
-                <input id="display-2-5" type="checkbox">
+                <input id="display-2-5" class="display-checkbox" data-display-min="2" data-display-max="5"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-2-5">2-5 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-5-7" type="checkbox">
+                <input id="display-5-7" class="display-checkbox" data-display-min="5" data-display-max="7"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-5-7">5-7 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-7-12" type="checkbox">
+                <input id="display-7-12" class="display-checkbox" data-display-min="7" data-display-max="12"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-7-12">7-12 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-12-16" type="checkbox">
+                <input id="display-12-16" class="display-checkbox" data-display-min="12" data-display-max="16"
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-12-16">12-16 inch</label>
               </div>
               <div class="checkbox-block">
-                <input id="display-16" type="checkbox">
+                <input id="display-16" class="display-checkbox" data-display-min="16" data-display-max=""
+                  type="checkbox">
                 <span class="checkmark"></span>
                 <label for="display-16">+16 inch</label>
               </div>
@@ -300,7 +323,7 @@
   <div class="modal closed" id="modal">
   </div>
 
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="dist/app.js"></script>
 </body>
 
 </html>
