@@ -13,8 +13,8 @@ const currentSlide = (n) => {
 };
 
 const showSlides = (n) => {
-    const slides = document.getElementsByClassName("item");
-    const dots = document.getElementsByClassName("dot");
+    const slides = Array.from(document.querySelectorAll("#slider .item"));
+    const dots = Array.from(document.querySelectorAll(".slider-dots .dot"));
     if (n > slides.length) {
         slideIndex = 1;
     }

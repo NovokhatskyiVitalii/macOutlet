@@ -1,4 +1,5 @@
 import items from './items.js';
+import { addItemToCart } from './shoppingCart.js';
 
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
@@ -7,6 +8,7 @@ let colorCheckBoxes = document.getElementsByClassName('color-checkbox');
 let storageCheckBoxes = document.getElementsByClassName('storage-checkbox');
 let osCheckBoxes = document.getElementsByClassName('os-checkbox');
 let displayCheckBoxes = document.getElementsByClassName('display-checkbox');
+
 
 const MAX_PRICE = getMaxItemPrice();
 const MIN_PRICE = getMinItemPrice();
@@ -143,23 +145,27 @@ function renderModal(item) {
             <div class="modal-price">
                 <span class="price">$${item.price}</span>
                 <span class="modal-str-text">Stock: <span class="txt-price">${orderStock}</span> pcs.</span>
-                <button class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
+                <button onclick="addItemToCartFromCatalog(${item.id})" class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
             </div>
     </div>
   `;
 }
 
 function openModal(id) {
-  let item = items.find((element) => {
-    if (id == element.id) {
-      return true;
-    }
-    return false;
-  });
+  let item = items.find((element) => id == element.id);
 
   modalElement.innerHTML = renderModal(item);
 
   modalElement.classList.remove('closed');
+}
+
+function closeModal() {
+  modalElement.classList.add('closed');
+}
+
+function addItemToCartFromCatalog(id) {
+  addItemToCart(id);
+  closeModal();
 }
 
 function filtersUpdated() {
@@ -417,11 +423,11 @@ function initBannerSearch() {
       filtersUpdated();
     })
   });
-
 }
 
 export default function initCatalog() {
   window.openModal = openModal;
+  window.addItemToCartFromCatalog = addItemToCartFromCatalog;
   initBannerSearch();
 
   for (let accordionButton of accordionButtons) {
@@ -431,7 +437,7 @@ export default function initCatalog() {
 
   modalElement.addEventListener('click', (event) => {
     if (event.target == modalElement) {
-      modalElement.classList.add('closed');
+      closeModal();
     }
   });
 
