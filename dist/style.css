@@ -490,12 +490,16 @@ img {
           .shopping-cart .shopping-cart-items .item .quantity-counter .counter-block img {
             height: fit-content;
             cursor: pointer; }
+            .shopping-cart .shopping-cart-items .item .quantity-counter .counter-block img.disabled {
+              filter: grayscale(1); }
         .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block {
           display: flex;
           padding-left: 25px; }
           .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block img {
             height: fit-content;
             cursor: pointer; }
+            .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block img.disabled {
+              filter: grayscale(1); }
   .shopping-cart .totals {
     display: flex;
     background: #EAF6FF;

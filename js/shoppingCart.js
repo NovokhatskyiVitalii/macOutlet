@@ -1,13 +1,13 @@
 import items from './items.js';
 
-// cart item object example
-// {
-//     id: 3, - id of item from 'items'
-//     qty: 20 - quantity of added items
-// }
+
 let itemsInCart = [];
 
-// item getters
+const MAX_ITEM_QTY = 4;
+const MIN_ITEM_QTY = 1;
+
+const LOCAL_STORAGE_KEY = "itemsInCart";
+
 function getItemDataById(id) {
     return items.find(item => id == item.id);
 }
@@ -16,7 +16,6 @@ function getItemInCart(id) {
     return itemsInCart.find(item => id == item.id)
 }
 
-// adding items to cart
 export function addItemToCart(id) {
     const itemInCart = getItemInCart(id);
 
@@ -29,10 +28,9 @@ export function addItemToCart(id) {
         increaseItemQty(id);
     }
 
-    renderCart();
+    cartItemsUpdated();
 }
 
-// deleting items from cart
 function removeItemFromCart(id) {
     const pos = itemsInCart.findIndex((item) => {
         return item.id == id;
@@ -40,33 +38,28 @@ function removeItemFromCart(id) {
 
     if (pos != -1) {
         itemsInCart.splice(pos, 1);
-        renderCart();
+        cartItemsUpdated();
     }
 }
 
-// increase item quantity
 function increaseItemQty(id) {
     const itemInCart = getItemInCart(id);
 
-    if (itemInCart) {
+    if (itemInCart && itemInCart.qty < MAX_ITEM_QTY) {
         itemInCart.qty = itemInCart.qty + 1
     }
-    renderCart();
+    cartItemsUpdated();
 }
 
-// decrease item quantity
 function decreaseItemQty(id) {
     const itemInCart = getItemInCart(id);
 
-    if (itemInCart && itemInCart.qty > 2) {
+    if (itemInCart && itemInCart.qty > MIN_ITEM_QTY) {
         itemInCart.qty = itemInCart.qty - 1
-    } else if (itemInCart && itemInCart.qty == 1) {
-        removeItemFromCart(id);
     }
-    renderCart();
+    cartItemsUpdated();
 }
 
-// rendering cart items
 function renderCart() {
     renderCartItems();
     renderCartTotals();
@@ -85,6 +78,15 @@ function renderCartItems() {
 }
 
 function renderCartItem(item, qty) {
+    let increaseQtyClass = "";
+    let decreaseQtyClass = "";
+
+    if (qty == MIN_ITEM_QTY) {
+        decreaseQtyClass = "disabled"
+    } else if (qty == MAX_ITEM_QTY) {
+        increaseQtyClass = "disabled"
+    }
+
     return `
     <div class="item">
         <div class="item-info-container">
@@ -96,9 +98,9 @@ function renderCartItem(item, qty) {
         </div>
         <div class="quantity-counter">
             <div class="counter-block">
-                <img onclick="decreaseItemQty(${item.id})" src="img/icons/cart-shopping-icon1.svg" alt="">
+                <img onclick="decreaseItemQty(${item.id})" class="${decreaseQtyClass}" src="img/icons/cart-shopping-icon1.svg" alt="">
                 <span>${qty}</span>
-                <img onclick="increaseItemQty(${item.id})" src="img/icons/shopping-cart-icon2.svg" alt="">
+                <img onclick="increaseItemQty(${item.id})" class ="${increaseQtyClass}"  src="img/icons/shopping-cart-icon2.svg" alt="">
             </div>
             <div class="remove-block">
                 <img onclick="removeItemFromCart(${item.id})" src="img/icons/shopping-cart-icon-remove.svg" alt="">
@@ -145,9 +147,25 @@ function renderCartTotals() {
             </div> `
 }
 
-// working with persistent storage (localStorage)
-// function getItemsFromStorage()
-// function setItemsFromStorage(cartItems)
+function getItemsFromStorage() {
+    let cartItemsJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    if (cartItemsJSON) {
+        return JSON.parse(cartItemsJSON);
+    }
+    return [];
+}
+
+function setItemsFromStorage(cartItems) {
+    let cartItemsJSON = JSON.stringify(cartItems);
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, cartItemsJSON);
+}
+
+function cartItemsUpdated() {
+    renderCart();
+    setItemsFromStorage(itemsInCart);
+}
 
 function initDomEvents() {
     let shoppingCart = document.querySelector(".shopping-cart");
@@ -156,19 +174,6 @@ function initDomEvents() {
     openShoppingCartBtn.addEventListener('click', (event) => {
         shoppingCart.classList.toggle('active');
     });
-
-    // document.addEventListener('click', (event) => {
-    //     const target = event.target;
-    //     const closestToCart = target.closest('.shopping-cart');
-    //     const closestToCartButton = target.closest('.header-shopping-cart-icon');
-
-    //     console.log(closestToCart);
-    //     console.log(closestToCartButton);
-
-    //     if(!closestToCart && !closestToCartButton) {
-    //         shoppingCart.classList.remove('active');
-    //     }    
-    // })
 }
 
 export default function initShoppingCart() {
@@ -177,7 +182,7 @@ export default function initShoppingCart() {
     window.removeItemFromCart = removeItemFromCart;
     initDomEvents();
 
-    // get cart state from local storage if exist
+    itemsInCart = getItemsFromStorage();
 
-    renderCart();
+    cartItemsUpdated();
 }

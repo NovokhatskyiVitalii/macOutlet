@@ -95,19 +95,28 @@
                         flex-direction: row;
                         align-self: center;
                     }
-                    img{
+
+                    img {
                         height: fit-content;
                         cursor: pointer;
+
+                        &.disabled {
+                            filter: grayscale(1);
+                        }
                     }
                 }
 
                 .remove-block {
                     display: flex;
                     padding-left: 25px;
-                
-                    img{
+
+                    img {
                         height: fit-content;
                         cursor: pointer;
+
+                        &.disabled {
+                            filter: grayscale(1);
+                        }
                     }
                 }
 
