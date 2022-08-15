@@ -1,3 +1,7 @@
+export function getItemDataById(id) {
+  return items.find(item => id == item.id);
+}
+
 const items = [
     {
       id: 1,

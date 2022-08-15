@@ -1,4 +1,4 @@
-import items from './items.js';
+import { getItemDataById } from './items.js';
 
 
 let itemsInCart = [];
@@ -7,10 +7,6 @@ const MAX_ITEM_QTY = 4;
 const MIN_ITEM_QTY = 1;
 
 const LOCAL_STORAGE_KEY = "itemsInCart";
-
-function getItemDataById(id) {
-    return items.find(item => id == item.id);
-}
 
 function getItemInCart(id) {
     return itemsInCart.find(item => id == item.id)
@@ -156,7 +152,7 @@ function getItemsFromStorage() {
     return [];
 }
 
-function setItemsFromStorage(cartItems) {
+function setItemsToStorage(cartItems) {
     let cartItemsJSON = JSON.stringify(cartItems);
 
     localStorage.setItem(LOCAL_STORAGE_KEY, cartItemsJSON);
@@ -164,7 +160,7 @@ function setItemsFromStorage(cartItems) {
 
 function cartItemsUpdated() {
     renderCart();
-    setItemsFromStorage(itemsInCart);
+    setItemsToStorage(itemsInCart);
 }
 
 function initDomEvents() {

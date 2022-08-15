@@ -1,5 +1,11 @@
 import items from './items.js';
-import { addItemToCart } from './shoppingCart.js';
+import {
+  isItemLiked,
+  toggleLikedItem
+} from './likedItems.js';
+import {
+  addItemToCart
+} from './shoppingCart.js';
 
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
@@ -36,6 +42,11 @@ function getReviewsAsText(reviews) {
   return "Below average";
 }
 
+function onLikeClick(id) {
+  toggleLikedItem(id);
+  filtersUpdated();
+}
+
 function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let orderReviews = item.orderInfo.reviews;
@@ -52,9 +63,16 @@ function renderItem(item) {
     btnClass = "card-btn"
   }
 
+  let likeImgSrc = "";
+  if (isItemLiked(item.id)) {
+    likeImgSrc = "img/icons/likefull.svg";
+  } else {
+    likeImgSrc = "img/icons/like1.svg";
+  }
+
   return `
     <div class="item-card">
-      <img src="img/icons/like1.svg" class="like-img" width="20px" alt="like">
+      <img onclick="onLikeClick(${item.id})" src="${likeImgSrc}" class="like-img" width="20px" alt="like">
 
       <div class="img-card">
         <img src="img/${item.imgUrl}" alt="">
@@ -397,8 +415,8 @@ function initBannerSearch() {
     bannerSearchFilter.classList.toggle('show');
     openBannerSearchFilterButton.classList.toggle('active');
   });
-  
-  
+
+
   openBannerSearchOrderButton.addEventListener('click', () => {
     bannerSearchFilter.classList.remove('show');
     openBannerSearchFilterButton.classList.remove('active');
@@ -428,6 +446,7 @@ function initBannerSearch() {
 export default function initCatalog() {
   window.openModal = openModal;
   window.addItemToCartFromCatalog = addItemToCartFromCatalog;
+  window.onLikeClick = onLikeClick;
   initBannerSearch();
 
   for (let accordionButton of accordionButtons) {
