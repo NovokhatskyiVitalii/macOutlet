@@ -21,20 +21,17 @@
   }
 
   .block-search {
+    margin-right: 30px;
 
-    input {
-      width: 70%;
-      width: 70%;
-      border: 1px solid #E2E2E2;
-      border-radius: 2px;
-      margin-top: 14px;
-      height: 26px;
-    }
-
-    span {
+    .select-title {
       color: #0E49B5;
       font-size: 14px;
     }
+
+    .custom-select-container {
+      width: 100px;
+    }
+
   }
 
   .footer-banner {

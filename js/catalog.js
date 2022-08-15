@@ -1,4 +1,5 @@
-import items from './items.js';
+import customSelect from 'custom-select';
+import items, { getItemsCategories } from './items.js';
 import {
   isItemLiked,
   toggleLikedItem
@@ -19,6 +20,9 @@ let displayCheckBoxes = document.getElementsByClassName('display-checkbox');
 const MAX_PRICE = getMaxItemPrice();
 const MIN_PRICE = getMinItemPrice();
 
+const IN_STOCK_FILTER_STATUS = 'in-stock';
+const OUT_OF_STOCK_FILTER_STATUS = 'out-of-stock';
+
 let filters = {
   searchText: '',
   price: {
@@ -29,7 +33,9 @@ let filters = {
   storage: [],
   os: [],
   display: [],
-  sortDirection: ''
+  sortDirection: '',
+  stockStatus: '',
+  category: '',
 };
 
 function getReviewsAsText(reviews) {
@@ -250,6 +256,22 @@ function filtersUpdated() {
     });
   }
 
+  if (filters.stockStatus == IN_STOCK_FILTER_STATUS) {
+    filteredItems = filteredItems.filter((item) => {
+      return item.orderInfo.inStock > 0;
+    });
+  } else if (filters.stockStatus == OUT_OF_STOCK_FILTER_STATUS) {
+    filteredItems = filteredItems.filter((item) => {
+      return item.orderInfo.inStock == 0;
+    });
+  }
+
+  if (filters.category != ""){
+    filteredItems = filteredItems.filter((item) => {
+      return item.category == filters.category;
+    });
+  }
+
   if (filters.sortDirection == 'asc') {
     filteredItems.sort((a, b) => {
       return a.price > b.price;
@@ -401,28 +423,51 @@ function removeDisplayFromFilters(displayMin, displayMax) {
   }
 }
 
+function toggleSearchFilters() {
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+
+  bannerSearchFilter.classList.toggle('show');
+  openBannerSearchFilterButton.classList.toggle('active');
+}
+
+function hideSearchFilters() {
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+
+  bannerSearchFilter.classList.remove('show');
+  openBannerSearchFilterButton.classList.remove('active');
+}
+
+function toggleSearchOrder() {
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+
+  bannerSearchOrder.classList.toggle('show');
+  openBannerSearchOrderButton.classList.toggle('active');
+}
+
+function hideSearchOrder() {
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+
+  bannerSearchOrder.classList.remove('show');
+  openBannerSearchOrderButton.classList.remove('active');
+}
+
 function initBannerSearch() {
   const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
-  const bannerSearchFilter = document.querySelector('.banner-search-filter');
   const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
-  const bannerSearchOrder = document.querySelector('.banner-search-order');
   const searchOrderButtons = document.querySelectorAll('.banner-search-order .button');
 
   openBannerSearchFilterButton.addEventListener('click', () => {
-    bannerSearchOrder.classList.remove('show');
-    openBannerSearchOrderButton.classList.remove('active');
-
-    bannerSearchFilter.classList.toggle('show');
-    openBannerSearchFilterButton.classList.toggle('active');
+    hideSearchOrder();
+    toggleSearchFilters();
   });
 
-
   openBannerSearchOrderButton.addEventListener('click', () => {
-    bannerSearchFilter.classList.remove('show');
-    openBannerSearchFilterButton.classList.remove('active');
-
-    bannerSearchOrder.classList.toggle('show');
-    openBannerSearchOrderButton.classList.toggle('active');
+    hideSearchFilters();
+    toggleSearchOrder();
   });
 
   searchOrderButtons.forEach((element) => {
@@ -443,12 +488,7 @@ function initBannerSearch() {
   });
 }
 
-export default function initCatalog() {
-  window.openModal = openModal;
-  window.addItemToCartFromCatalog = addItemToCartFromCatalog;
-  window.onLikeClick = onLikeClick;
-  initBannerSearch();
-
+function initMainFilters() {
   for (let accordionButton of accordionButtons) {
     let panel = accordionButton.nextElementSibling;
     applyOpenPanelEvent(accordionButton, panel);
@@ -517,9 +557,48 @@ export default function initCatalog() {
       checkDisplayFilters(event.currentTarget);
       filtersUpdated();
     });
-
     checkDisplayFilters(displayCheckBox);
   }
+}
 
+function initSearchFilters() {
+  const stockSelectElement = document.getElementById('stock-select');
+  customSelect(stockSelectElement);
+  stockSelectElement.addEventListener('change', () => {
+    filters.stockStatus = stockSelectElement.value;
+  });
+
+  const categorySelectElement = document.getElementById('category-select');
+  const categories = getItemsCategories();
+  categories.forEach((category) => {
+    const opt = document.createElement('option');
+    opt.value = category;
+    opt.innerHTML = category;
+    categorySelectElement.appendChild(opt);
+  })
+  customSelect(categorySelectElement);
+  categorySelectElement.addEventListener('change', () => {
+    filters.category = categorySelectElement.value;
+  });
+
+
+  const submitFilters = document.getElementById('search-filters-submit');
+  submitFilters.addEventListener('click', () => {
+    filtersUpdated();
+    hideSearchFilters();
+  });
+}
+
+function initDomEvents() {
+  initBannerSearch();
+  initMainFilters();
+  initSearchFilters();
+}
+
+export default function initCatalog() {
+  window.openModal = openModal;
+  window.addItemToCartFromCatalog = addItemToCartFromCatalog;
+  window.onLikeClick = onLikeClick;
+  initDomEvents();
   filtersUpdated();
 }

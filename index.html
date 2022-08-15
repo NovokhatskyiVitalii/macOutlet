@@ -127,16 +127,22 @@
       <div class="banner-search-filter">
         <div class="search-content">
           <div class="block-search">
-            <span>Category</span>
-            <input type="text">
+            <span class="select-title">Category</span>
+            <select class="select-list" id="category-select">
+              <option value="">All Category</option>
+            </select>
           </div>
           <div class="block-search">
-            <span>Stock</span>
-            <input type="text">
+            <span class="select-title">Stock</span>
+            <select class="select-list" id="stock-select">
+              <option value="">All</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
           </div>
         </div>
         <div class="footer-banner">
-          <button class="btn-filter">Filter results</button>
+          <button id="search-filters-submit" class="btn-filter">Filter results</button>
         </div>
       </div>
 

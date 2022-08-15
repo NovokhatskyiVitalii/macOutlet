@@ -5,7 +5,6 @@ import initSliderBanner from "./sliderBanner.js";
 import initShoppingCart from "./shoppingCart.js";
 import initLikedItems from './likedItems.js';
 
-
 initShoppingCart();
 initSliderBanner();
 

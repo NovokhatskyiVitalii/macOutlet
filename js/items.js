@@ -2,6 +2,16 @@ export function getItemDataById(id) {
   return items.find(item => id == item.id);
 }
 
+export function getItemsCategories() {
+  return items.reduce((result, currentItem) => {
+    if (!result.includes(currentItem.category)) {
+      result.push(currentItem.category);
+    }
+
+    return result;
+  }, []);
+}
+
 const items = [
     {
       id: 1,
