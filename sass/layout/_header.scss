@@ -30,6 +30,11 @@
       right: 0px;
       top: 30px;
       right: 35px;
+      display: none;
+
+      &.show{
+        display: block;
+      }
 
       &:hover{
         color: white;

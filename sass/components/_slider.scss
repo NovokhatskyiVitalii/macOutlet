@@ -106,7 +106,7 @@
     border-radius: 5px;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       -webkit-animation-name: fade;
       -webkit-animation-duration: 1.5s;
       animation-name: fade;
@@ -114,6 +114,17 @@
       opacity: .8;
     }
   }
+
+  @media screen and (max-width: 780px) {
+    .position-top {
+
+      .info-column {
+        font-size: 60px;
+       
+      }
+    }
+  }
+
 }
 
 .slider-dots {

@@ -1,4 +1,6 @@
-import { getItemDataById } from './items.js';
+import {
+    getItemDataById
+} from './items.js';
 
 
 let itemsInCart = [];
@@ -59,6 +61,7 @@ function decreaseItemQty(id) {
 function renderCart() {
     renderCartItems();
     renderCartTotals();
+    renderCountIconShopping()
 }
 
 function renderCartItems() {
@@ -145,13 +148,22 @@ function renderCartTotals() {
             </div> `
 }
 
-// function renderCountIconShopping() {
-//     const totalsData = getCalculatedCartTotals();
-//     const totalsElementIconShopping = document.getElementById('count-total');
+function renderCountIconShopping() {
+    const totalsData = getCalculatedCartTotals();
+    const totalsElementIconShopping = document.getElementById('count-total');
+    let circleTotalElement = document.querySelector('.count-shopping');
+    console.log(circleTotalElement);
 
-//     totalsElementIconShopping.innerHTML = `
-//             <span class="circle">${totalsData.totalQty}</span>`
-// }
+    if (totalsData.totalQty > 0) {
+        circleTotalElement.classList.add('show');
+    } else if (totalsData.totalQty == 1) {
+        circleTotalElement.classList.remove('show');
+    }
+
+    totalsElementIconShopping.innerHTML = `
+            <span class="circle">${totalsData.totalQty}</span>`
+}
+renderCountIconShopping();
 
 function getItemsFromStorage() {
     let cartItemsJSON = localStorage.getItem(LOCAL_STORAGE_KEY);

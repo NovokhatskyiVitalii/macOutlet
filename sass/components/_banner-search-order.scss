@@ -10,6 +10,8 @@
   right: 0;
   z-index: 2;
   display: none;
+  animation-name: fade;
+  animation-duration: 0.5s;
 
   &.show {
     display: block;

@@ -22,6 +22,8 @@
     flex-direction: row;
     align-items: center;
     border-radius: 5px;
+    animation-name: fade;
+    animation-duration: 0.5s;
   }
 
   .modal-img {
@@ -73,6 +75,7 @@
 
   .about {
     padding-bottom: 15px;
+    padding-left: 5px;
     font-size: 14px;
     color: #767272;
   }
@@ -104,5 +107,51 @@
   .txt-price {
     font-weight: bold;
     color: #3b3e66;
+  }
+
+  @media screen and (max-width: 1030px) {
+    .modal-content {
+      width: 950px;
+      height: 430px;
+    }
+    .modal-info {
+      padding: 35px 40px 0px 40px;
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .modal-content {
+      width: 800px;
+      height: 430px;
+    }
+    .modal-info {
+      padding: 35px 20px 0px 20px;
+    }
+    .modal-img {
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (max-width: 820px) {
+    .modal-content {
+      width: 690px;
+      height: 400px;
+    }
+    .modal-info {
+      padding: 35px 10px 0px 10px;
+    }
+    .modal-img {
+      padding: 0 0px;
+    }
+    .modal-stats-card {
+      width: 250px;
+      margin-top: 20px;
+    }
+    .stats-card .orders {
+     padding-right: 20px;
+    }
+    .about {
+      padding-left: 5px;
+    }
   }
 }
