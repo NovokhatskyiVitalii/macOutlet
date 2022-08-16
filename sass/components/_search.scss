@@ -30,6 +30,14 @@
       &.active {
         content: url('/img/icons/Group1.svg');
       }
+
+      &:hover {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8;
+      }
     }
 
     .logo-sort {
@@ -37,6 +45,14 @@
 
       &.active {
         content: url('/img/icons/Sort-active.svg');
+      }
+
+      &:hover {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8;
       }
     }
   }

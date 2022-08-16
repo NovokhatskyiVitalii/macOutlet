@@ -1,4 +1,14 @@
-import items from './items.js';
+import customSelect from 'custom-select';
+import items, {
+  getItemsCategories
+} from './items.js';
+import {
+  isItemLiked,
+  toggleLikedItem
+} from './likedItems.js';
+import {
+  addItemToCart
+} from './shoppingCart.js';
 
 let accordionButtons = document.getElementsByClassName("accordion");
 let modalElement = document.getElementById('modal');
@@ -8,8 +18,12 @@ let storageCheckBoxes = document.getElementsByClassName('storage-checkbox');
 let osCheckBoxes = document.getElementsByClassName('os-checkbox');
 let displayCheckBoxes = document.getElementsByClassName('display-checkbox');
 
+
 const MAX_PRICE = getMaxItemPrice();
 const MIN_PRICE = getMinItemPrice();
+
+const IN_STOCK_FILTER_STATUS = 'in-stock';
+const OUT_OF_STOCK_FILTER_STATUS = 'out-of-stock';
 
 let filters = {
   searchText: '',
@@ -21,7 +35,9 @@ let filters = {
   storage: [],
   os: [],
   display: [],
-  sortDirection: ''
+  sortDirection: '',
+  stockStatus: '',
+  category: '',
 };
 
 function getReviewsAsText(reviews) {
@@ -34,6 +50,11 @@ function getReviewsAsText(reviews) {
   return "Below average";
 }
 
+function onLikeClick(id) {
+  toggleLikedItem(id);
+  filtersUpdated();
+}
+
 function renderItem(item) {
   let orderStock = item.orderInfo.inStock;
   let orderReviews = item.orderInfo.reviews;
@@ -41,6 +62,7 @@ function renderItem(item) {
   let imgUrl = '';
   let btnClass = '';
   let isDisabled = orderStock == 0;
+  
 
   if (isDisabled) {
     imgUrl = "img/icons/logo-check-noitems.svg"
@@ -50,9 +72,16 @@ function renderItem(item) {
     btnClass = "card-btn"
   }
 
+  let likeImgSrc = "";
+  if (isItemLiked(item.id)) {
+    likeImgSrc = "img/icons/likefull.svg";
+  } else {
+    likeImgSrc = "img/icons/like1.svg";
+  }
+
   return `
     <div class="item-card">
-      <img src="img/icons/like1.svg" class="like-img" width="20px" alt="like">
+      <img onclick="onLikeClick(${item.id})" src="${likeImgSrc}" class="like-img" width="20px" alt="like">
 
       <div class="img-card">
         <img src="img/${item.imgUrl}" alt="">
@@ -143,23 +172,27 @@ function renderModal(item) {
             <div class="modal-price">
                 <span class="price">$${item.price}</span>
                 <span class="modal-str-text">Stock: <span class="txt-price">${orderStock}</span> pcs.</span>
-                <button class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
+                <button onclick="addItemToCartFromCatalog(${item.id})" class="${btnClass}" ${isDisabled ? 'disabled' : ''}>Add to cart</button>
             </div>
     </div>
   `;
 }
 
 function openModal(id) {
-  let item = items.find((element) => {
-    if (id == element.id) {
-      return true;
-    }
-    return false;
-  });
+  let item = items.find((element) => id == element.id);
 
   modalElement.innerHTML = renderModal(item);
 
   modalElement.classList.remove('closed');
+}
+
+function closeModal() {
+  modalElement.classList.add('closed');
+}
+
+function addItemToCartFromCatalog(id) {
+  addItemToCart(id);
+  closeModal();
 }
 
 function filtersUpdated() {
@@ -223,6 +256,22 @@ function filtersUpdated() {
       }
 
       return false;
+    });
+  }
+
+  if (filters.stockStatus == IN_STOCK_FILTER_STATUS) {
+    filteredItems = filteredItems.filter((item) => {
+      return item.orderInfo.inStock > 0;
+    });
+  } else if (filters.stockStatus == OUT_OF_STOCK_FILTER_STATUS) {
+    filteredItems = filteredItems.filter((item) => {
+      return item.orderInfo.inStock == 0;
+    });
+  }
+
+  if (filters.category != "") {
+    filteredItems = filteredItems.filter((item) => {
+      return item.category == filters.category;
     });
   }
 
@@ -377,28 +426,51 @@ function removeDisplayFromFilters(displayMin, displayMax) {
   }
 }
 
+function toggleSearchFilters() {
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+
+  bannerSearchFilter.classList.toggle('show');
+  openBannerSearchFilterButton.classList.toggle('active');
+}
+
+function hideSearchFilters() {
+  const bannerSearchFilter = document.querySelector('.banner-search-filter');
+  const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
+
+  bannerSearchFilter.classList.remove('show');
+  openBannerSearchFilterButton.classList.remove('active');
+}
+
+function toggleSearchOrder() {
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+
+  bannerSearchOrder.classList.toggle('show');
+  openBannerSearchOrderButton.classList.toggle('active');
+}
+
+function hideSearchOrder() {
+  const bannerSearchOrder = document.querySelector('.banner-search-order');
+  const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
+
+  bannerSearchOrder.classList.remove('show');
+  openBannerSearchOrderButton.classList.remove('active');
+}
+
 function initBannerSearch() {
   const openBannerSearchFilterButton = document.querySelector('#open-banner-search-filter');
-  const bannerSearchFilter = document.querySelector('.banner-search-filter');
   const openBannerSearchOrderButton = document.querySelector('#open-banner-search-order');
-  const bannerSearchOrder = document.querySelector('.banner-search-order');
   const searchOrderButtons = document.querySelectorAll('.banner-search-order .button');
 
   openBannerSearchFilterButton.addEventListener('click', () => {
-    bannerSearchOrder.classList.remove('show');
-    openBannerSearchOrderButton.classList.remove('active');
-
-    bannerSearchFilter.classList.toggle('show');
-    openBannerSearchFilterButton.classList.toggle('active');
+    hideSearchOrder();
+    toggleSearchFilters();
   });
-  
-  
-  openBannerSearchOrderButton.addEventListener('click', () => {
-    bannerSearchFilter.classList.remove('show');
-    openBannerSearchFilterButton.classList.remove('active');
 
-    bannerSearchOrder.classList.toggle('show');
-    openBannerSearchOrderButton.classList.toggle('active');
+  openBannerSearchOrderButton.addEventListener('click', () => {
+    hideSearchFilters();
+    toggleSearchOrder();
   });
 
   searchOrderButtons.forEach((element) => {
@@ -417,13 +489,9 @@ function initBannerSearch() {
       filtersUpdated();
     })
   });
-
 }
 
-export default function initCatalog() {
-  window.openModal = openModal;
-  initBannerSearch();
-
+function initMainFilters() {
   for (let accordionButton of accordionButtons) {
     let panel = accordionButton.nextElementSibling;
     applyOpenPanelEvent(accordionButton, panel);
@@ -431,7 +499,7 @@ export default function initCatalog() {
 
   modalElement.addEventListener('click', (event) => {
     if (event.target == modalElement) {
-      modalElement.classList.add('closed');
+      closeModal();
     }
   });
 
@@ -492,9 +560,67 @@ export default function initCatalog() {
       checkDisplayFilters(event.currentTarget);
       filtersUpdated();
     });
-
     checkDisplayFilters(displayCheckBox);
   }
+}
 
+function initSearchFilters() {
+  const stockSelectElement = document.getElementById('stock-select');
+  customSelect(stockSelectElement);
+  stockSelectElement.addEventListener('change', () => {
+    filters.stockStatus = stockSelectElement.value;
+  });
+
+  const categorySelectElement = document.getElementById('category-select');
+  const categories = getItemsCategories();
+  categories.forEach((category) => {
+    const opt = document.createElement('option');
+    opt.value = category;
+    opt.innerHTML = category;
+    categorySelectElement.appendChild(opt);
+  })
+  customSelect(categorySelectElement);
+  categorySelectElement.addEventListener('change', () => {
+    filters.category = categorySelectElement.value;
+  });
+
+
+  const submitFilters = document.getElementById('search-filters-submit');
+  submitFilters.addEventListener('click', () => {
+    filtersUpdated();
+    hideSearchFilters();
+  });
+}
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("btn-top").style.display = "block";
+  } else {
+    document.getElementById("btn-top").style.display = "none";
+  }
+ 
+}
+
+function topFunction() {
+  let buttonElementGoToTop = document.getElementById("btn-top");
+
+  buttonElementGoToTop.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+}
+
+function initDomEvents() {
+  initBannerSearch();
+  topFunction();
+  initMainFilters();
+  initSearchFilters();
+}
+
+export default function initCatalog() {
+  window.onscroll = scrollFunction;
+  window.openModal = openModal;
+  window.addItemToCartFromCatalog = addItemToCartFromCatalog;
+  window.onLikeClick = onLikeClick;
+  initDomEvents();
   filtersUpdated();
 }

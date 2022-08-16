@@ -20,13 +20,31 @@
       <a href="#" class="header-logo">
         <img src="img/icons/logo.svg" alt="logo">
       </a>
-      <div class="header-bin">
-        <img src="img/icons/bin-ellipse.svg" class="ellipse" alt="bin-logo">
-        <img src="img/icons/bin.svg" class="cart" alt="bin-logo">
+      <div class="header-shopping-cart-icon">
+        <div  id="count-total" class="count-shopping">
+          
+        </div>
+        <img src="img/icons/shopping-cart.svg" class="shopping-cart-icon" alt="shopping-cart">
+      </div>
+
+      <div class="shopping-cart">
+        <div class="shopping-header-cart">
+          <h5>Shopping Cart</h5>
+          <span>Checkout is almost done!</span>
+        </div>
+        <div class="shopping-cart-items">
+
+        </div>
+        <div id="cart-totals" class="totals">
+
+        </div>
+        <div class="shopping-buy">
+          <span class="btn-buy">Buy</span>
+        </div>
       </div>
     </header>
 
-    <section class="slider">
+    <section id="slider" class="slider">
       <div class="item">
         <img src="img/banners/airpods_pro_banner.png" alt="slide 1">
         <div class="banner-info">
@@ -112,16 +130,22 @@
       <div class="banner-search-filter">
         <div class="search-content">
           <div class="block-search">
-            <span>Category</span>
-            <input type="text">
+            <span class="select-title">Category</span>
+            <select class="select-list" id="category-select">
+              <option value="">All Category</option>
+            </select>
           </div>
           <div class="block-search">
-            <span>Stock</span>
-            <input type="text">
+            <span class="select-title">Stock</span>
+            <select class="select-list" id="stock-select">
+              <option value="">All</option>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
           </div>
         </div>
         <div class="footer-banner">
-          <button class="btn-filter">Filter results</button>
+          <button id="search-filters-submit" class="btn-filter">Filter results</button>
         </div>
       </div>
 
@@ -322,6 +346,10 @@
 
   <div class="modal closed" id="modal">
   </div>
+
+  <div class="arrow-wrap" id="btn-top" title="Go to top">
+    <img class="arrow-svg" src="img/icons/icon-top-page.svg" alt="">
+  </div> 
 
   <script type="module" src="dist/app.js"></script>
 </body>

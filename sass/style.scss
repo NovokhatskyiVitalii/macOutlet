@@ -1,3 +1,6 @@
+// libraries
+@import 'libraries/custom-select';
+
 // variables
 @import 'variables';
 
@@ -12,6 +15,7 @@
 @import './components/banner-search-filter';
 @import './components/banner-search-order';
 @import './components/catalog';
+@import './components/shopping-cart';
 @import './components/stats-card';
 @import './components/modal';
 @import './components/tiny-elements';

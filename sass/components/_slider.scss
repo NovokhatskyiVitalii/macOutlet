@@ -6,9 +6,9 @@
 
   .item {
     -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
+    -webkit-animation-duration: 1.2s;
     animation-name: fade;
-    animation-duration: 1.5s;
+    animation-duration: 1.2s;
 
     img {
       object-fit: contain;
@@ -105,7 +105,26 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+    &:hover {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+      opacity: .8;
+    }
   }
+
+  @media screen and (max-width: 780px) {
+    .position-top {
+
+      .info-column {
+        font-size: 60px;
+       
+      }
+    }
+  }
+
 }
 
 .slider-dots {
