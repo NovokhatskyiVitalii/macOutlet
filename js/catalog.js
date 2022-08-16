@@ -598,20 +598,20 @@ function scrollFunction() {
   } else {
     document.getElementById("btn-top").style.display = "none";
   }
-  topFunction();
+ 
 }
 
 function topFunction() {
   let buttonElementGoToTop = document.getElementById("btn-top");
 
   buttonElementGoToTop.addEventListener('click', () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({top: 0, behavior: 'smooth'});
   });
 }
 
 function initDomEvents() {
   initBannerSearch();
+  topFunction();
   initMainFilters();
   initSearchFilters();
 }

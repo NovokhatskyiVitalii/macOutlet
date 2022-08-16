@@ -156,14 +156,14 @@ function renderCountIconShopping() {
 
     if (totalsData.totalQty > 0) {
         circleTotalElement.classList.add('show');
-    } else if (totalsData.totalQty == 1) {
+    } else {
         circleTotalElement.classList.remove('show');
     }
 
     totalsElementIconShopping.innerHTML = `
             <span class="circle">${totalsData.totalQty}</span>`
 }
-renderCountIconShopping();
+
 
 function getItemsFromStorage() {
     let cartItemsJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
