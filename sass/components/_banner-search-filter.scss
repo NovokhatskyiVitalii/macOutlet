@@ -25,7 +25,7 @@
 
     .select-title {
       color: #0E49B5;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .custom-select-container {
@@ -37,19 +37,29 @@
   .footer-banner {
     background: #edf3ff;
     border-radius: 0px 0px 5px 5px;
-    margin-top: 10px;
-    padding: 5px 0 6px 0;
+    margin-top: 16px;
+    padding: 15px 0 15px 0;
     display: flex;
     justify-content: center;
 
     .btn-filter {
       background: #0E49B5;
       cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
+      border-radius: 10px;
+      font-size: 15px;
       border: none;
       color: #E5E5E5;
-      padding: 4px 24px;
+      padding: 7px 29px;
+
+      &:hover{
+        color: white;
+        background:   rgba(0, 18, 158, 0.915);
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8;
+      }
     }
   }
 }

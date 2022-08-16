@@ -6,7 +6,7 @@
     border: 1px solid #E2E2E2;
     border-radius: 2px;
     margin-top: 14px;
-    height: 26px;
+    height: 32px;
 
     * {
         box-sizing: border-box;
@@ -17,12 +17,22 @@
     }
 
     .custom-select-opener {
-        background-color: #ccc;
+        background-color: #EDF3FF;
+        color: #102243;
         padding: 8px;
         display: block;
         cursor: pointer;
         width: 100%;
         font-size: 14px;
+
+        &:hover {
+            background-color: #EDF3FF;
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+            opacity: .8;
+        }
     }
 
     select {
@@ -45,7 +55,7 @@
 
     &.is-open {
         .custom-select-panel {
-            max-height: 10.7em;
+            max-height: 20em;
             overflow-y: auto
         }
     }
@@ -57,12 +67,17 @@
         cursor: pointer;
         font-size: 14px;
         padding: 8px;
+        color: #102243;
 
         &.has-focus {
-            background-color: grey;
+             background-color: #EDF3FF;background-color: #EDF3FF;
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1s;
+            animation-name: fade;
+            animation-duration: 1s;
+            opacity: .8;
         }
 
-        &.is-selected::before {}
     }
 
     .custom-select-optgroup>.custom-select-option {
@@ -73,6 +88,5 @@
         content: attr(data-label);
         display: block;
         padding: 0.5em;
-        color: #888;
     }
 }

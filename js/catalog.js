@@ -1,5 +1,7 @@
 import customSelect from 'custom-select';
-import items, { getItemsCategories } from './items.js';
+import items, {
+  getItemsCategories
+} from './items.js';
 import {
   isItemLiked,
   toggleLikedItem
@@ -60,6 +62,7 @@ function renderItem(item) {
   let imgUrl = '';
   let btnClass = '';
   let isDisabled = orderStock == 0;
+  
 
   if (isDisabled) {
     imgUrl = "img/icons/logo-check-noitems.svg"
@@ -266,7 +269,7 @@ function filtersUpdated() {
     });
   }
 
-  if (filters.category != ""){
+  if (filters.category != "") {
     filteredItems = filteredItems.filter((item) => {
       return item.category == filters.category;
     });
@@ -589,6 +592,24 @@ function initSearchFilters() {
   });
 }
 
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("btn-top").style.display = "block";
+  } else {
+    document.getElementById("btn-top").style.display = "none";
+  }
+  topFunction();
+}
+
+function topFunction() {
+  let buttonElementGoToTop = document.getElementById("btn-top");
+
+  buttonElementGoToTop.addEventListener('click', () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+}
+
 function initDomEvents() {
   initBannerSearch();
   initMainFilters();
@@ -596,6 +617,7 @@ function initDomEvents() {
 }
 
 export default function initCatalog() {
+  window.onscroll = scrollFunction;
   window.openModal = openModal;
   window.addItemToCartFromCatalog = addItemToCartFromCatalog;
   window.onLikeClick = onLikeClick;

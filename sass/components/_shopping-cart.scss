@@ -103,6 +103,14 @@
                         &.disabled {
                             filter: grayscale(1);
                         }
+
+                        &:hover {
+                            background: #0E49B5;
+                            -webkit-animation-name: fade;
+                            -webkit-animation-duration: 1.5s;
+                            animation-name: fade;
+                            animation-duration: 1.5s;
+                        }
                     }
                 }
 
@@ -116,6 +124,13 @@
 
                         &.disabled {
                             filter: grayscale(1);
+                        }
+
+                        &:hover {
+                            -webkit-animation-name: fade;
+                            -webkit-animation-duration: 1.5s;
+                            animation-name: fade;
+                            animation-duration: 1.5s;
                         }
                     }
                 }
@@ -159,6 +174,14 @@
             background: #3C44B1;
             border-radius: 10px;
             padding: 11px 90px;
+
+            &:hover {
+                background: #0E49B5;
+                -webkit-animation-name: fade;
+                -webkit-animation-duration: 1.5s;
+                animation-name: fade;
+                animation-duration: 1.5s;
+            }
         }
     }
 }

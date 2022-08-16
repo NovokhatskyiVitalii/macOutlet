@@ -10,10 +10,61 @@
   &.disabled {
     color: white;
     background: #dddddd;
+
+    &:hover {
+      color: white;
+      opacity: .8;
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 2.5;
+      animation-name: fade;
+      animation-duration: 2.5s;
+      background: rgb(255, 12, 12);
+    }
+  }
+
+  &:hover {
+    color: white;
+    background: rgba(0, 18, 158, 0.915);
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 2.5s;
+    animation-name: fade;
+    animation-duration: 2.5s;
+    opacity: .8;
   }
 }
 
 .color-txt-info {
   color: #767272;
   font-size: 14px;
+}
+
+
+.arrow-wrap {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #0E49B5;
+  color: white;
+  cursor: pointer;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+
+  &:hover {
+    background: #0E49B5;
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+
+  }
+
+  .arrow-svg {
+    height: 100%;
+    width: 100%;
+  }
 }

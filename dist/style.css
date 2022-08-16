@@ -9,18 +9,26 @@
   border: 1px solid #E2E2E2;
   border-radius: 2px;
   margin-top: 14px;
-  height: 26px; }
+  height: 32px; }
   .custom-select-container * {
     box-sizing: border-box; }
   .custom-select-container.is-disabled {
     opacity: .333; }
   .custom-select-container .custom-select-opener {
-    background-color: #ccc;
+    background-color: #EDF3FF;
+    color: #102243;
     padding: 8px;
     display: block;
     cursor: pointer;
     width: 100%;
     font-size: 14px; }
+    .custom-select-container .custom-select-opener:hover {
+      background-color: #EDF3FF;
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+      opacity: .8; }
   .custom-select-container select {
     visibility: hidden;
     position: absolute;
@@ -36,7 +44,7 @@
     z-index: 1;
     width: 100%; }
   .custom-select-container.is-open .custom-select-panel {
-    max-height: 10.7em;
+    max-height: 20em;
     overflow-y: auto; }
   .custom-select-container .custom-select-option {
     border: 1px solid #E2E2E2;
@@ -44,16 +52,22 @@
     background: #ffffff;
     cursor: pointer;
     font-size: 14px;
-    padding: 8px; }
+    padding: 8px;
+    color: #102243; }
     .custom-select-container .custom-select-option.has-focus {
-      background-color: grey; }
+      background-color: #EDF3FF;
+      background-color: #EDF3FF;
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1s;
+      animation-name: fade;
+      animation-duration: 1s;
+      opacity: .8; }
   .custom-select-container .custom-select-optgroup > .custom-select-option {
     padding-left: 2em; }
   .custom-select-container .custom-select-optgroup::before {
     content: attr(data-label);
     display: block;
-    padding: 0.5em;
-    color: #888; }
+    padding: 0.5em; }
 
 *,
 *:before,
@@ -98,6 +112,32 @@ img {
       height: 100%;
       width: 100%;
       object-fit: contain; }
+    .header .header-shopping-cart-icon .count-shopping {
+      height: 25px;
+      width: 25px;
+      cursor: pointer;
+      background-color: #0E49B5;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      right: 0px;
+      top: 30px;
+      right: 35px; }
+      .header .header-shopping-cart-icon .count-shopping:hover {
+        color: white;
+        background: rgba(0, 18, 158, 0.915);
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+        animation-name: fade;
+        animation-duration: 1.5s;
+        opacity: .8; }
+      .header .header-shopping-cart-icon .count-shopping span {
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        padding-top: 5px; }
 
 .slider {
   max-width: 100%;
@@ -106,9 +146,9 @@ img {
   margin-bottom: 15px; }
   .slider .item {
     -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
+    -webkit-animation-duration: 1.2s;
     animation-name: fade;
-    animation-duration: 1.5s; }
+    animation-duration: 1.2s; }
     .slider .item img {
       object-fit: contain;
       width: 100%;
@@ -179,6 +219,12 @@ img {
     border: none;
     border-radius: 5px;
     cursor: pointer; }
+    .slider .btn-banner:hover {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+      opacity: .8; }
 
 .slider-dots {
   text-align: center; }
@@ -230,10 +276,22 @@ img {
       cursor: pointer; }
       .search .banner-search .logo-filter.active {
         content: url(d29c3d491c1b898865a9.svg); }
+      .search .banner-search .logo-filter:hover {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8; }
     .search .banner-search .logo-sort {
       cursor: pointer; }
       .search .banner-search .logo-sort.active {
         content: url(04563c37c6bff8f5aa33.svg); }
+      .search .banner-search .logo-sort:hover {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8; }
 
 .banner-search-filter {
   width: 287px;
@@ -256,24 +314,32 @@ img {
     margin-right: 30px; }
     .banner-search-filter .block-search .select-title {
       color: #0E49B5;
-      font-size: 14px; }
+      font-size: 16px; }
     .banner-search-filter .block-search .custom-select-container {
       width: 100px; }
   .banner-search-filter .footer-banner {
     background: #edf3ff;
     border-radius: 0px 0px 5px 5px;
-    margin-top: 10px;
-    padding: 5px 0 6px 0;
+    margin-top: 16px;
+    padding: 15px 0 15px 0;
     display: flex;
     justify-content: center; }
     .banner-search-filter .footer-banner .btn-filter {
       background: #0E49B5;
       cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
+      border-radius: 10px;
+      font-size: 15px;
       border: none;
       color: #E5E5E5;
-      padding: 4px 24px; }
+      padding: 7px 29px; }
+      .banner-search-filter .footer-banner .btn-filter:hover {
+        color: white;
+        background: rgba(0, 18, 158, 0.915);
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 2.5s;
+        animation-name: fade;
+        animation-duration: 2.5s;
+        opacity: .8; }
 
 .banner-search-order {
   width: 162px;
@@ -312,6 +378,14 @@ img {
       justify-content: center;
       position: relative;
       cursor: pointer; }
+      .banner-search-order .buttons-list .button:hover {
+        background: #EDF3FF;
+        border-radius: 15px;
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+        animation-name: fade;
+        animation-duration: 1.5s;
+        opacity: .8; }
       .banner-search-order .buttons-list .button.with-image img {
         padding-right: 12px;
         position: absolute;
@@ -335,24 +409,27 @@ img {
       overflow: hidden;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15); }
       .catalog .accordion-filters .accordion-wrap .accordion {
-        background: #edf3ff;
         cursor: pointer;
         padding: 18px;
         width: 250px;
         text-align: left;
-        outline: none;
-        transition: 0.4s; }
+        outline: none; }
         .catalog .accordion-filters .accordion-wrap .accordion:hover {
-          background-color: #ccc; }
+          background: #edf3ff;
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1s;
+          animation-name: fade;
+          animation-duration: 1s;
+          opacity: .8; }
         .catalog .accordion-filters .accordion-wrap .accordion:after {
           content: "\276F";
           font-size: 13px;
           color: black;
           float: right;
           margin-left: 5px;
-          transition: transform 0.3s; }
+          transition: 0.4s; }
         .catalog .accordion-filters .accordion-wrap .accordion.active {
-          background-color: white; }
+          background: #edf3ff; }
           .catalog .accordion-filters .accordion-wrap .accordion.active::after {
             transform: rotate(90deg);
             color: black; }
@@ -439,6 +516,12 @@ img {
       top: 18px;
       right: 18px;
       cursor: pointer; }
+      .catalog .items .like-img:hover {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1s;
+        animation-name: fade;
+        animation-duration: 1s;
+        opacity: .8; }
     .catalog .items .img-card {
       padding: 14px 50px 0 50px; }
     .catalog .items .check-img {
@@ -543,6 +626,12 @@ img {
             cursor: pointer; }
             .shopping-cart .shopping-cart-items .item .quantity-counter .counter-block img.disabled {
               filter: grayscale(1); }
+            .shopping-cart .shopping-cart-items .item .quantity-counter .counter-block img:hover {
+              background: #0E49B5;
+              -webkit-animation-name: fade;
+              -webkit-animation-duration: 1.5s;
+              animation-name: fade;
+              animation-duration: 1.5s; }
         .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block {
           display: flex;
           padding-left: 25px; }
@@ -551,6 +640,11 @@ img {
             cursor: pointer; }
             .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block img.disabled {
               filter: grayscale(1); }
+            .shopping-cart .shopping-cart-items .item .quantity-counter .remove-block img:hover {
+              -webkit-animation-name: fade;
+              -webkit-animation-duration: 1.5s;
+              animation-name: fade;
+              animation-duration: 1.5s; }
   .shopping-cart .totals {
     display: flex;
     background: #EAF6FF;
@@ -576,6 +670,12 @@ img {
       background: #3C44B1;
       border-radius: 10px;
       padding: 11px 90px; }
+      .shopping-cart .shopping-buy .btn-buy:hover {
+        background: #0E49B5;
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+        animation-name: fade;
+        animation-duration: 1.5s; }
 
 .stats-card {
   background: #dae2ea;
@@ -686,8 +786,48 @@ img {
   .card-btn.disabled {
     color: white;
     background: #dddddd; }
+    .card-btn.disabled:hover {
+      color: white;
+      opacity: .8;
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 2.5;
+      animation-name: fade;
+      animation-duration: 2.5s;
+      background: #ff0c0c; }
+  .card-btn:hover {
+    color: white;
+    background: rgba(0, 18, 158, 0.915);
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 2.5s;
+    animation-name: fade;
+    animation-duration: 2.5s;
+    opacity: .8; }
 
 .color-txt-info {
   color: #767272;
   font-size: 14px; }
+
+.arrow-wrap {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #0E49B5;
+  color: white;
+  cursor: pointer;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%; }
+  .arrow-wrap:hover {
+    background: #0E49B5;
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s; }
+  .arrow-wrap .arrow-svg {
+    height: 100%;
+    width: 100%; }
 

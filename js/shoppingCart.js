@@ -83,6 +83,7 @@ function renderCartItem(item, qty) {
         increaseQtyClass = "disabled"
     }
 
+
     return `
     <div class="item">
         <div class="item-info-container">
@@ -103,6 +104,7 @@ function renderCartItem(item, qty) {
             </div>
         </div>
     </div>`;
+
 }
 
 function getCalculatedCartTotals() {
@@ -142,6 +144,14 @@ function renderCartTotals() {
                 <span>Total price:<span class="strong">${totalsData.totalPrice} $</span></span>
             </div> `
 }
+
+// function renderCountIconShopping() {
+//     const totalsData = getCalculatedCartTotals();
+//     const totalsElementIconShopping = document.getElementById('count-total');
+
+//     totalsElementIconShopping.innerHTML = `
+//             <span class="circle">${totalsData.totalQty}</span>`
+// }
 
 function getItemsFromStorage() {
     let cartItemsJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
